@@ -81,7 +81,7 @@ public class DbHelper {
         val.put("_id", 1);  // FIXME
         val.put("username", acc.getUsername());
         val.put("password", acc.getPassword());
- 
+
         // FIXME: Is this legit?
         long ret = mDb.replace(ACCOUNT_TABLE, null, val);
 
@@ -102,8 +102,8 @@ public class DbHelper {
         }
         cur.moveToFirst();
         Account acc = new Account();
-        acc.setUsername(cur.getString(1));
-        acc.setPassword(cur.getString(2));
+        acc.setUsername(cur.getString(0));
+        acc.setPassword(cur.getString(1));
         return acc;
     }
 
