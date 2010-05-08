@@ -17,14 +17,17 @@ public abstract class ThreadWorker
 
     protected void sendUpdate(String msg)
     {
-        hdl.obtainMessage(UPDATEMSG, msg).sendToTarget();
+        if (hdl != null) {
+            hdl.obtainMessage(UPDATEMSG, msg).sendToTarget();
+        }
     }
 
     
     protected void sendEndMsg()
     {
-        hdl.sendEmptyMessage(ENDMSG);
+        if (hdl != null) {
+            hdl.sendEmptyMessage(ENDMSG);
+        }
     }
-
 
 }
