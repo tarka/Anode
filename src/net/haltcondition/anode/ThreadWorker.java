@@ -1,9 +1,10 @@
 package net.haltcondition.anode;
 
 import android.os.Handler;
+import java.util.concurrent.Callable;
 
-public abstract class ThreadWorker 
-    implements Runnable
+public abstract class ThreadWorker<T>
+    implements Callable<T>
 {
     public static final int ENDMSG = 0;
     public static final int UPDATEMSG = 1;
