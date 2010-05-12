@@ -16,7 +16,16 @@
             </intent-filter>
         </activity>
 
-	<activity android:name=".EditAccount" />	
+        <activity android:name=".EditAccount" />
+
+        <receiver android:name=".Updater" android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data android:name="android.appwidget.provider"
+                       android:resource="@xml/widget" />
+        </receiver>
 
     </application>
 
