@@ -1,10 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:background="@drawable/appwidget_bg"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-        >
-    
+                android:layout_height="fill_parent">
 
-</RelativeLayout>
+    <ImageView android:src="@drawable/internode_logo"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_gravity="center_vertical"
+               android:paddingLeft="18dip"/>
+
+    <LinearLayout android:orientation="vertical"
+                  android:gravity="center"
+                  android:layout_width="fill_parent"
+                  android:layout_height="fill_parent"
+                  android:layout_weight="1"
+                  android:padding="18dip">
+
+        <TextView android:text="No Data"
+                  android:gravity="center"
+                  android:layout_width="fill_parent"
+                  android:layout_height="fill_parent"
+                  android:textColor="#ffffff"
+                  android:textSize="20sp"
+                  android:layout_weight="1"/>
+
+        <ProgressBar android:id="@+id/widget_progress"
+                     android:layout_width="fill_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_weight="1"
+                     style="?android:attr/progressBarStyleHorizontal"/>
+
+    </LinearLayout>
+
+</LinearLayout>
