@@ -1,6 +1,5 @@
 package net.haltcondition.anode;
 
-import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
@@ -34,11 +33,11 @@ public class Updater
 
         } else if (msg.what == HttpWorker.MsgCode.UPDATEMSG.ordinal()) {
             // Not used, just logged for now
-            Log.i(TAG, "Update: "+(String)msg.obj);
+            Log.i(TAG, "Update: "+msg.obj);
 
         } else if (msg.what == HttpWorker.MsgCode.RESULT.ordinal()) {
             // Not used, just logged for now
-            Log.i(TAG, "Update: "+(String)msg.obj);
+            Log.i(TAG, "Update: "+msg.obj);
         }
 
         return true;
