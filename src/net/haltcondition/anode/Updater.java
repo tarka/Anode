@@ -51,8 +51,9 @@ public class Updater
 
         DbHelper db = new DbHelper(context);
         Account account = db.getAccount();
-        if (account == null) {
-            Log.w(TAG, "No account available, doing nothing");
+        Service service = db.getService();
+        if (account == null || service == null) {
+            Log.w(TAG, "Account or Service not available, doing nothing");
         }
 
         String uri = context.getResources().getString(R.string.inode_api_url);
