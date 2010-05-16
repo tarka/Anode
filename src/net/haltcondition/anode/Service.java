@@ -5,11 +5,17 @@ package net.haltcondition.anode;
  */
 public class Service
 {
+    private String serviceName;
     private String serviceId;
 
-    public Service(String serviceId)
+    public Service()
+    {
+    }
+
+    public Service(String serviceName, String serviceId)
     {
         this.serviceId = serviceId;
+        this.serviceName = serviceName;
     }
 
     public String getServiceId()
@@ -20,5 +26,15 @@ public class Service
     public void setServiceId(String serviceId)
     {
         this.serviceId = serviceId;
+    }
+
+    public String getServiceName()
+    {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName)
+    {
+        this.serviceName = serviceName;
     }
 }

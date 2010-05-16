@@ -41,6 +41,8 @@ public class ServiceParser
     {
         Log.d(TAG, "Element Start: "+localName);
         if (localName.equals("service")) {
+            service = new Service();
+            service.setServiceName(attributes.getValue("type"));
             inElement = true;
         }
     }
@@ -61,7 +63,7 @@ public class ServiceParser
     {
         Log.d(TAG, "Chars: "+ch.toString());
         if (inElement) {
-            service = new Service(new String(ch).trim());
+            service.setServiceId(new String(ch));
         }
     }
 }

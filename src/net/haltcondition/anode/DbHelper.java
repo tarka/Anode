@@ -16,7 +16,7 @@ public class DbHelper {
     private DatabaseHelper mDbHelper;
     private SQLiteDatabase mDb;
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 5;
     private static final String DATABASE_NAME = "data";
     private static final String ACCOUNT_TABLE = "accounts";
     private static final String SERVICE_TABLE = "services";
@@ -30,7 +30,8 @@ public class DbHelper {
 
     private static final String SERVICE_TABLE_CREATE = "create table if not exists "+ SERVICE_TABLE +" ("+
         "_id integer primary key,"+  // FIXME: Should be autoincrement eventually
-        "service_id text not null);";
+        "service_id text not null," +
+        "service_name text not null);";
 
 
     private final Context mCtx;
@@ -52,6 +53,7 @@ public class DbHelper {
             Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
                     + newVersion + ", which will destroy all old data");
             db.execSQL("DROP TABLE IF EXISTS "+ACCOUNT_TABLE+";");  // FIXME
+            db.execSQL("DROP TABLE IF EXISTS "+SERVICE_TABLE+";");  // FIXME
             onCreate(db);
         }
     }
@@ -111,7 +113,8 @@ public class DbHelper {
     {
         ContentValues val = new ContentValues();
         val.put("_id", 1);  // FIXME
-        val.put("service", svc.getServiceId());
+        val.put("service_id", svc.getServiceId());
+        val.put("service_name", svc.getServiceName());
 
         // FIXME: Is this legit?
         long ret = mDb.replace(SERVICE_TABLE, null, val);
@@ -122,13 +125,13 @@ public class DbHelper {
     {
         Log.i(TAG, "Fetching Service");
 
-        Cursor cur = mDb.query(SERVICE_TABLE, new String[] {"service"},
+        Cursor cur = mDb.query(SERVICE_TABLE, new String[] {"service_name, service_id"},
                         "_id=1", null, null, null, null, null);
         if (cur == null || cur.getCount() == 0) {
             return null;
         }
         cur.moveToFirst();
-        return new Service(cur.getString(0));
+        return new Service(cur.getString(0), cur.getString(1));
     }
 
 }
