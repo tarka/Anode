@@ -56,9 +56,7 @@ public class HttpWorker<RType>
                  * This sucks, but I've wasted half a day trying to get HttpClient basic auth to work.
                  * Android appears to ship with alpha version of 4.0 that doesn't match the docs.
                  */
-                String auth = account.getUsername() + ":" + account.getPassword();
-                Log.i(TAG, "Auth: "+auth);
-                auth = new String(Base64.encodeBytes((auth).getBytes()));
+                String auth = Base64.encodeBytes((account.getUsername() + ":" + account.getPassword()).getBytes()).toString();
                 method.addHeader("Authorization", "Basic " + auth);
             }
 
