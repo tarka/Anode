@@ -2,7 +2,9 @@ package net.haltcondition.anode;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Copyright Steve Smith (tarkasteve@gmail.com): 16/05/2010
@@ -10,7 +12,7 @@ import java.util.Date;
 public class Usage
 {
     private Long totalQuota;
-    private Date rollOver;
+    private Calendar rollOver;
     private Long used;
 
     private SimpleDateFormat dateParser = new SimpleDateFormat("yyyy-MM-dd");
@@ -29,7 +31,7 @@ public class Usage
         this.totalQuota = Long.valueOf(str);
     }
 
-    public Date getRollOver()
+    public Calendar getRollOver()
     {
         return rollOver;
     }
@@ -37,7 +39,9 @@ public class Usage
     public void setRollOver(String str)
         throws ParseException
     {
-        rollOver = dateParser.parse(str);
+        Date d = dateParser.parse(str);
+        rollOver = new GregorianCalendar();
+        rollOver.setTime(d);
     }
 
     public Long getUsed()
