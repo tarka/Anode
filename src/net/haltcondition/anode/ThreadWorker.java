@@ -1,13 +1,18 @@
 package net.haltcondition.anode;
 
 import android.os.Handler;
-import java.util.concurrent.Callable;
+import android.os.Message;
 
-public abstract class ThreadWorker<T>
-    implements Callable<T>
+public abstract class ThreadWorker<RType>
+    implements Runnable
 {
-    public static final int ENDMSG = 0;
-    public static final int UPDATEMSG = 1;
+
+    public enum MsgCode {
+        ENDMSG,
+        UPDATEMSG,
+        RESULT,
+        ERRORMSG
+    }
 
     private final Handler hdl;
 
@@ -19,15 +24,28 @@ public abstract class ThreadWorker<T>
     protected void sendUpdate(String msg)
     {
         if (hdl != null) {
-            hdl.obtainMessage(UPDATEMSG, msg).sendToTarget();
+            hdl.obtainMessage(MsgCode.UPDATEMSG.ordinal(), msg).sendToTarget();
         }
     }
 
+    protected void sendResult(RType result)
+    {
+        if (hdl != null) {
+            hdl.obtainMessage(MsgCode.RESULT.ordinal(), result).sendToTarget();
+        }
+    }
+
+    protected void sendError(String msg)
+    {
+        if (hdl != null) {
+            hdl.obtainMessage(MsgCode.ERRORMSG.ordinal(), msg).sendToTarget();
+        }
+    }
     
     protected void sendEndMsg()
     {
         if (hdl != null) {
-            hdl.sendEmptyMessage(ENDMSG);
+            hdl.sendEmptyMessage(MsgCode.ENDMSG.ordinal());
         }
     }
 

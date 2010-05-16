@@ -16,14 +16,21 @@ public class DbHelper {
     private DatabaseHelper mDbHelper;
     private SQLiteDatabase mDb;
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "data";
     private static final String ACCOUNT_TABLE = "accounts";
+    private static final String SERVICE_TABLE = "services";
+    private static final String LASTUSAGE_TABLE = "usage";
+    private static final String HISTORY_TABLE = "history";
 
     private static final String ACCOUNT_TABLE_CREATE = "create table if not exists "+ ACCOUNT_TABLE +" ("+
         "_id integer primary key,"+  // FIXME: Should be autoincrement eventually
         "username text not null,"+
         "password text not null);";
+
+    private static final String SERVICE_TABLE_CREATE = "create table if not exists "+ SERVICE_TABLE +" ("+
+        "_id integer primary key,"+  // FIXME: Should be autoincrement eventually
+        "service_id text not null);";
 
 
     private final Context mCtx;
@@ -37,13 +44,14 @@ public class DbHelper {
         @Override
         public void onCreate(SQLiteDatabase db) {
             db.execSQL(ACCOUNT_TABLE_CREATE);
+            db.execSQL(SERVICE_TABLE_CREATE);
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
                     + newVersion + ", which will destroy all old data");
-            //db.execSQL("DROP TABLE IF EXISTS "+ACCOUNT_TABLE);  // FIXME
+            db.execSQL("DROP TABLE IF EXISTS "+ACCOUNT_TABLE+";");  // FIXME
             onCreate(db);
         }
     }
@@ -62,19 +70,8 @@ public class DbHelper {
         mDbHelper.close();
     }
 
-    ////////////////////////////////////////
 
-    public int flushCache() {
-        Log.i(TAG, "Flushing all cache tables");
-        int del = 0;
-        // del += mDb.delete(FILTER_TABLE, null, null);  // Deletes all rows!
-        Log.i(TAG, "Deleted "+del+" records");
-        return del;
-
-    }
-
-
-    ////////////////////////////////////////
+    /* ************************************************************ */
 
     public void setAccount(Account acc) {
         ContentValues val = new ContentValues();
@@ -92,7 +89,8 @@ public class DbHelper {
         // }
     }
 
-    public Account getAccount() {
+    public Account getAccount()
+    {
         Log.i(TAG, "Fetching Account");
 
         Cursor cur = mDb.query(ACCOUNT_TABLE, new String[] {"username", "password"},
@@ -107,5 +105,30 @@ public class DbHelper {
         return acc;
     }
 
+    /* ************************************************************ */
+
+    public void setServiceId(Account acc, Service svc)
+    {
+        ContentValues val = new ContentValues();
+        val.put("_id", 1);  // FIXME
+        val.put("service", svc.getServiceId());
+
+        // FIXME: Is this legit?
+        long ret = mDb.replace(SERVICE_TABLE, null, val);
+
+    }
+
+    public Service getService()
+    {
+        Log.i(TAG, "Fetching Service");
+
+        Cursor cur = mDb.query(SERVICE_TABLE, new String[] {"service"},
+                        "_id=1", null, null, null, null, null);
+        if (cur == null || cur.getCount() == 0) {
+            return null;
+        }
+        cur.moveToFirst();
+        return new Service(cur.getString(0));
+    }
 
 }

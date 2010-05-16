@@ -21,6 +21,9 @@ public class Anode extends Activity
     }
 
 
+    /* ************************************************************ */
+    // Menus
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         boolean result = super.onCreateOptionsMenu(menu);

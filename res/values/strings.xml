@@ -6,4 +6,5 @@
     <string name="menu_settings">Edit Account</string>
     <string name="menu_update">Sync Account</string>
 
+    <string name="msg_parsing_xml">Parsing XML ...</string>
 </resources>

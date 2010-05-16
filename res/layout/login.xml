@@ -24,7 +24,7 @@
                   android:layout_height="wrap_content"
                   android:text="Password" />
         <EditText android:id="@+id/password"
-                  android:password="true"
+                  android:password="false"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_weight="1"/>
