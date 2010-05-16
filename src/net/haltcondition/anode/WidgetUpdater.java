@@ -13,7 +13,7 @@ import java.util.concurrent.Executors;
 /**
  * Copyright Steve Smith (tarkasteve@gmail.com): 12/05/2010
  */
-public class Updater
+public class WidgetUpdater
     extends AppWidgetProvider
     implements Handler.Callback
 {
