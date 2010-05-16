@@ -21,5 +21,7 @@ public class UsageTest
     void testDateParse(){
         usage.setRollOver("2000-05-21");
         assertEquals(usage.getRollOver().get(Calendar.YEAR), 2000);
+        assertEquals(usage.getRollOver().get(Calendar.MONTH), 5);
+        assertEquals(usage.getRollOver().get(Calendar.DAY_OF_MONTH), 21);
     }
 }
