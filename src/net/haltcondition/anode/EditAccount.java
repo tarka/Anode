@@ -91,9 +91,14 @@ public class EditAccount
             Toast.makeText(this, err, Toast.LENGTH_LONG).show();
 
         } else if (msg.what == HttpWorker.MsgCode.RESULT.ordinal()) {
+            Service service = (Service)msg.obj;
+            Log.i(TAG, "Got service "+service.getServiceName()+": "+service.getServiceId());
+
             progress.dismiss();
             dbh.setAccount(account);
-            dbh.setServiceId(account, (Service)msg.obj);
+            dbh.setServiceId(account, service);
+
+            Toast.makeText(this, "Got service \""+service.getServiceName()+"\"", Toast.LENGTH_SHORT).show();
 
             // Close
             setResult(RESULT_OK);
