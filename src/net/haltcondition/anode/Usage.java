@@ -46,6 +46,7 @@ public class Usage
         Date d = dateParser.parse(str);
         rollOver = new GregorianCalendar();
         rollOver.setTime(d);
+        rollOver.setLenient(true);
     }
 
     public Long getUsed()
@@ -58,10 +59,9 @@ public class Usage
         used = Long.valueOf(str);
     }
 
-    public Float getPercentageUsed()
+    public double getPercentageUsed()
     {
-        return ((float)used) / ((float)totalQuota) * 100;
+        return ((double)used) / ((double)totalQuota) * 100;
     }
 
-    
 }
