@@ -7,4 +7,8 @@
     <string name="menu_update">Sync Account</string>
 
     <string name="msg_parsing_xml">Parsing XML ...</string>
+    <string name="failed_to_fetch_service">Failed to fetch service ID:</string>
+    <string name="got_service">Got service</string>
+    <string name="fetching_service">Fetching Service Info</string>
+    <string name="starting_worker">Starting HTTP Worker ...</string>
 </resources>

@@ -84,7 +84,7 @@ public class EditAccount
             progress.setMessage((String)msg.obj);
 
         } else if (msg.what == HttpWorker.MsgCode.ERRORMSG.ordinal()) {
-            String err = "Failed to fetch service ID: "+msg.obj;
+            String err = getResources().getString(R.string.failed_to_fetch_service) +msg.obj;
             Log.e(TAG, err);
 
             progress.dismiss();
@@ -98,7 +98,7 @@ public class EditAccount
             dbh.setAccount(account);
             dbh.setServiceId(account, service);
 
-            Toast.makeText(this, "Got service \""+service.getServiceName()+"\"", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.got_service) +" \""+service.getServiceName()+"\"", Toast.LENGTH_SHORT).show();
 
             // Close
             setResult(RESULT_OK);
@@ -121,7 +121,7 @@ public class EditAccount
         account.setPassword(ePassword.getText().toString());
 
         Log.i(TAG, "Fetching Service ID");
-        progress = ProgressDialog.show(this, "Fetching Service Info", "Starting HTTP Worker ...",
+        progress = ProgressDialog.show(this, getResources().getString(R.string.fetching_service), getResources().getString(R.string.starting_worker),
                                        false, true);
 
         String uri = getResources().getString(R.string.inode_api_url);
