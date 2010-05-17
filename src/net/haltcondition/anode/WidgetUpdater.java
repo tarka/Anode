@@ -21,13 +21,14 @@ public class WidgetUpdater
 
     private static final String TAG = "Updater";
 
-    private ExecutorService pool = Executors.newFixedThreadPool(2);
+    private ExecutorService pool = Executors.newSingleThreadExecutor();
 
     private RemoteViews views;
 
+
     @Override
     public boolean handleMessage(Message msg) {
-        Log.i(TAG, "Got message: "+msg.what);
+        Log.i(TAG, "Got message: "+ msg.what);
 
         if (msg.what == HttpWorker.MsgCode.ENDMSG.ordinal()) {
             // Not used
@@ -53,6 +54,7 @@ public class WidgetUpdater
     private void setUsage(Usage usage)
     {
         views.setProgressBar(R.id.widget_progress, 100, (int)usage.getPercentageUsed(), false);
+
     }
 
     @Override
@@ -60,12 +62,15 @@ public class WidgetUpdater
     {
         Log.i(TAG, "Running update");
 
-        // FIXME: Needs to be thread-safe? This should just bea 
+        // FIXME: Needs to be thread-safe?
         views = new RemoteViews(context.getPackageName(), R.layout.widget);
 
         DbHelper db = new DbHelper(context);
+        db.open();
         Account account = db.getAccount();
         Service service = db.getService();
+        db.close();
+
         if (account == null || service == null) {
             Log.w(TAG, "Account or Service not available, doing nothing");
             return;
