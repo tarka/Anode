@@ -31,4 +31,18 @@ public class UsageTest
         assertEquals(usage.getRollOver().get(Calendar.MONTH), Calendar.DECEMBER);
         assertEquals(usage.getRollOver().get(Calendar.DAY_OF_MONTH), 21);
     }
+
+    @Test
+    void testQuotaParse()
+    {
+        usage.setTotalQuota("120000000000");
+        assertEquals(true, usage.getTotalQuota().equals(120000000000L));
+    }
+
+    @Test
+    void testUsageParse()
+    {
+        usage.setUsed("120000000000");
+        assertEquals(true, usage.getUsed().equals(120000000000L));
+    }
 }

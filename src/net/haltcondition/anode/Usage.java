@@ -28,7 +28,7 @@ public class Usage
 
     public void setTotalQuota(String str)
     {
-        this.totalQuota = Long.valueOf(str);
+        totalQuota = Long.valueOf(str);
     }
 
     public Calendar getRollOver()
@@ -51,6 +51,6 @@ public class Usage
 
     public void setUsed(String str)
     {
-        this.used = Long.valueOf(used);
+        used = Long.valueOf(str);
     }
 }
