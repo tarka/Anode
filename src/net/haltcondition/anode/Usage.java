@@ -1,5 +1,8 @@
 package net.haltcondition.anode;
 
+import com.sun.xml.internal.fastinfoset.tools.FI_DOM_Or_XML_DOM_SAX_SAXEvent;
+
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -16,6 +19,7 @@ public class Usage
     private Long used;
 
     private SimpleDateFormat dateParser = new SimpleDateFormat("yyyy-MM-dd");
+    private static final BigDecimal ONEHUNDRED = new BigDecimal(100);
 
     public Usage()
     {
@@ -53,4 +57,11 @@ public class Usage
     {
         used = Long.valueOf(str);
     }
+
+    public Float getPercentageUsed()
+    {
+        return new BigDecimal(used).divide(new BigDecimal(totalQuota)).multiply(ONEHUNDRED).floatValue();
+    }
+
+    
 }

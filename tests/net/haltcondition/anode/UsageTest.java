@@ -1,11 +1,11 @@
 package net.haltcondition.anode;
 
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.Calendar;
 
@@ -36,13 +36,21 @@ public class UsageTest
     void testQuotaParse()
     {
         usage.setTotalQuota("120000000000");
-        assertEquals(true, usage.getTotalQuota().equals(120000000000L));
+        assertEquals(usage.getTotalQuota().equals(120000000000L), true);
     }
 
     @Test
     void testUsageParse()
     {
         usage.setUsed("120000000000");
-        assertEquals(true, usage.getUsed().equals(120000000000L));
+        assertEquals(usage.getUsed().equals(120000000000L), true);
+    }
+
+    @Test
+    void testPCUsed()
+    {
+        usage.setTotalQuota("100");
+        usage.setUsed("25");
+        assertEquals(Math.abs(usage.getPercentageUsed() - 25.0) < 0.01, true);
     }
 }
