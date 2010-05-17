@@ -24,6 +24,7 @@ public class UsageParser
     private boolean inElement = false;
     private static final String ELEMENT = "traffic"; 
 
+    @Override
     public Usage parse(InputStream in)
     {
         try {
