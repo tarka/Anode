@@ -60,7 +60,7 @@ public class Usage
 
     public Float getPercentageUsed()
     {
-        return new BigDecimal(used).divide(new BigDecimal(totalQuota)).multiply(ONEHUNDRED).floatValue();
+        return ((float)used) / ((float)totalQuota) * 100;
     }
 
     
