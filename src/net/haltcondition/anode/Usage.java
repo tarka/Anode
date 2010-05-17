@@ -1,7 +1,5 @@
 package net.haltcondition.anode;
 
-import com.sun.xml.internal.fastinfoset.tools.FI_DOM_Or_XML_DOM_SAX_SAXEvent;
-
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,7 +17,6 @@ public class Usage
     private Long used;
 
     private SimpleDateFormat dateParser = new SimpleDateFormat("yyyy-MM-dd");
-    private static final BigDecimal ONEHUNDRED = new BigDecimal(100);
 
     public Usage()
     {
