@@ -23,8 +23,10 @@ public class WidgetUpdater
 
     private ExecutorService pool = Executors.newSingleThreadExecutor();
 
-    private RemoteViews views;
-
+    // Save for when workers return
+    private Context ctx;
+    private AppWidgetManager mgr;
+    private int[] widgetIds;
 
     @Override
     public boolean handleMessage(Message msg) {
@@ -53,8 +55,17 @@ public class WidgetUpdater
 
     private void setUsage(Usage usage)
     {
-        views.setProgressBar(R.id.widget_progress, 100, (int)usage.getPercentageUsed(), false);
+        for (int id: widgetIds) {
+            RemoteViews views = new RemoteViews(ctx.getPackageName(), R.layout.widget);
 
+            Double usedpc = usage.getPercentageUsed();
+            Integer usedint = usedpc.intValue();
+
+            views.setProgressBar(R.id.widget_progress, 100, usedint, false);
+            views.setTextViewText(R.id.widget_usedpc, usedint.toString()+"%");
+
+            mgr.updateAppWidget(id, views);
+        }
     }
 
     @Override
@@ -62,8 +73,11 @@ public class WidgetUpdater
     {
         Log.i(TAG, "Running update");
 
-        // FIXME: Needs to be thread-safe?
-        views = new RemoteViews(context.getPackageName(), R.layout.widget);
+        // FIXME: Is this OK to do?
+        ctx = context;
+        mgr = appWidgetManager;
+        widgetIds = appWidgetIds;
+
 
         DbHelper db = new DbHelper(context);
         db.open();

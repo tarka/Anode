@@ -55,7 +55,7 @@ public class Usage
         used = Long.valueOf(str);
     }
 
-    public double getPercentageUsed()
+    public Double getPercentageUsed()
     {
         return ((double)used) / ((double)totalQuota) * 100;
     }
