@@ -13,12 +13,11 @@ import java.text.ParseException;
 /**
  * Copyright Steve Smith (tarkasteve@gmail.com): 15/05/2010
  */
-// FIXME: This currently assumes only one service; we should save all and give the user a choice of which to use.
 public class UsageParser
     extends DefaultHandler
     implements HttpResultHandler<Usage>
 {
-    private static final String TAG = "ServiceParser";
+    private static final String TAG = "UsageParser";
 
     private Usage usage = null;
     private boolean inElement = false;
