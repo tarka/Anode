@@ -5,19 +5,20 @@
               android:background="@drawable/appwidget_bg"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:clickable="true">
+              android:clickable="true"
+              android:padding="14dip">
 
     <ImageView android:src="@drawable/internode_logo"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:layout_gravity="center_vertical"
-               android:paddingLeft="18dip"/>
+               android:padding="8dip" />
 
     <LinearLayout android:orientation="vertical"
                   android:layout_gravity="center"
                   android:layout_width="fill_parent"
                   android:layout_height="fill_parent"
-                  android:padding="0dip">
+                  android:padding="4dip">
 
         <LinearLayout android:orientation="horizontal"
                       android:layout_weight="1"
@@ -29,9 +30,10 @@
                       android:layout_weight="1"                      
                       android:layout_width="fill_parent"
                       android:layout_height="fill_parent"
+                      android:padding="4dp"
                       android:text="---"
                       android:textColor="#ffffff"
-                      android:textSize="30sp"/>
+                      android:textSize="40sp"/>
 
             <LinearLayout android:orientation="vertical"
                           android:layout_weight="1"
