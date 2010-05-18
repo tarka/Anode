@@ -14,50 +14,57 @@
                android:paddingLeft="18dip"/>
 
     <LinearLayout android:orientation="vertical"
-                  android:gravity="center"
+                  android:layout_gravity="center"
                   android:layout_width="fill_parent"
                   android:layout_height="fill_parent"
-                  android:padding="18dip">
+                  android:padding="0dip">
 
         <LinearLayout android:orientation="horizontal"
                       android:layout_weight="1"
                       android:layout_width="fill_parent"
                       android:layout_height="fill_parent"
-                      android:gravity="top">
+                      android:layout_gravity="top">
 
             <TextView android:id="@+id/widget_usedpc"
+                      android:layout_weight="1"                      
                       android:layout_width="fill_parent"
                       android:layout_height="fill_parent"
-                      android:text="0%"
+                      android:text="---"
                       android:textColor="#ffffff"
                       android:textSize="30sp"/>
 
+            <LinearLayout android:orientation="vertical"
+                          android:layout_weight="1"
+                          android:layout_gravity="top"
+                          android:layout_width="fill_parent"
+                          android:layout_height="fill_parent">
 
-            <TextView android:id="@+id/widget_total"
-                      android:text="TOTAL"
-                      android:layout_width="fill_parent"
-                      android:layout_height="fill_parent"
-                      android:textColor="#ffffff"
-                      android:textSize="20sp"
-                      android:layout_alignParentTop="true"/>
+                <TextView android:id="@+id/widget_total"
+                          android:layout_weight="1"
+                          android:text="TOTAL"
+                          android:layout_width="fill_parent"
+                          android:layout_height="fill_parent"
+                          android:textColor="#ffffff"
+                          android:textSize="20sp"/>
 
-            <!--<TextView android:id="@+id/widget_used"-->
-                      <!--android:text="USED"-->
-                      <!--android:layout_width="fill_parent"-->
-                      <!--android:layout_height="fill_parent"-->
-                      <!--android:textColor="#ffffff"-->
-                      <!--android:textSize="20sp"-->
-                      <!--android:layout_below="@id/widget_total"/>-->
+                <TextView android:id="@+id/widget_used"
+                          android:layout_weight="1"
+                          android:text="USED"
+                          android:layout_width="fill_parent"
+                          android:layout_height="fill_parent"
+                          android:textColor="#ffffff"
+                          android:textSize="20sp"/>
+
+            </LinearLayout>
 
         </LinearLayout>
-                        
-
 
         <ProgressBar android:id="@+id/widget_progress"
                      android:layout_weight="1"
                      android:layout_width="fill_parent"
                      android:layout_height="wrap_content"
-                     style="?android:attr/progressBarStyleHorizontal"/>
+                     style="?android:attr/progressBarStyleHorizontal"
+                     android:indeterminate="true"/>
 
     </LinearLayout>
 
