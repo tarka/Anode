@@ -65,7 +65,7 @@ public class Usage
         Calendar c = (Calendar)rollOver.clone();
 
         // Assumption: Internode periods always cross a month boundary.
-        // This seems reasonable, otherwise how would the roll-over periods
+        // This seems reasonable, otherwise how would the roll-over e.g. periods
         // ending on the 31st?
         c.add(Calendar.MONTH, -1);
         return c.getActualMaximum(Calendar.DAY_OF_MONTH);
