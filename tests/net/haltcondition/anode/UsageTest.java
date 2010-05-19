@@ -64,4 +64,26 @@ public class UsageTest
         }
         assertEquals((int)usage.getDaysInPeriod(), 28);
     }
+
+    @Test
+    void testDaysFebLeap()
+    {
+        try {
+            usage.setRollOver("2008-03-21");
+        } catch (ParseException e) {
+            fail(e.getMessage(), e);
+        }
+        assertEquals((int)usage.getDaysInPeriod(), 29);
+    }
+
+    @Test
+    void testDaysCrossYears()
+    {
+        try {
+            usage.setRollOver("2008-01-21");
+        } catch (ParseException e) {
+            fail(e.getMessage(), e);
+        }
+        assertEquals((int)usage.getDaysInPeriod(), 31);
+    }
 }
