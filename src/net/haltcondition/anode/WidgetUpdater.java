@@ -65,9 +65,14 @@ public class WidgetUpdater
 
 
             views.setProgressBar(R.id.widget_progress, 100, usedint, false);
+
             views.setTextViewText(R.id.widget_usedpc, usedint.toString()+"%");
+
             views.setTextViewText(R.id.widget_total, ((Long)(usage.getTotalQuota()/GB)).toString());
             views.setTextViewText(R.id.widget_used, usedtr.toString());
+
+            views.setTextViewText(R.id.widget_daysin, "99");
+            views.setTextViewText(R.id.widget_daystotal, "99");
 
             mgr.updateAppWidget(id, views);
         }

@@ -6,7 +6,10 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:clickable="true"
-              android:padding="14dip">
+              android:paddingLeft="14dip"
+              android:paddingTop="14dip"
+              android:paddingBottom="15dip"
+              android:paddingRight="20dip">
 
     <ImageView android:src="@drawable/internode_logo"
                android:layout_width="wrap_content"
@@ -14,67 +17,118 @@
                android:layout_gravity="center_vertical"
                android:padding="8dip" />
 
+    <!-- Text over progressbar -->
     <LinearLayout android:orientation="vertical"
                   android:layout_gravity="center"
                   android:layout_width="fill_parent"
                   android:layout_height="fill_parent"
                   android:padding="0dip">
 
+        <!-- Big usage to right of smaller usages -->
         <LinearLayout android:orientation="horizontal"
                       android:layout_weight="1"
                       android:layout_width="fill_parent"
                       android:layout_height="fill_parent"
-                      android:layout_gravity="top"
+                      android:layout_gravity="center"
                       android:padding="0dip">
 
             <TextView android:id="@+id/widget_usedpc"
                       android:layout_weight="1"                      
                       android:layout_width="fill_parent"
                       android:layout_height="fill_parent"
-                      android:layout_gravity="top"
                       android:paddingLeft="4dip"
                       android:text="--"
                       android:textColor="#ffffff"
                       android:textSize="40sp"/>
 
+            <!-- GB top, days below -->
             <LinearLayout android:orientation="vertical"
                           android:layout_weight="1"
-                          android:layout_gravity="top"
-                          android:padding="0dip"
+                          android:layout_gravity="left"
+                          android:paddingBottom="4dip"
                           android:layout_width="fill_parent"
                           android:layout_height="fill_parent">
 
-                <TextView android:id="@+id/widget_total"
-                          android:layout_weight="1"
-                          android:text="TOTAL"
-                          android:padding="0dip"
-                          android:layout_width="fill_parent"
-                          android:layout_height="fill_parent"
-                          android:textColor="#ffffff"
-                          android:textSize="20sp"/>
-                <TextView android:layout_weight="1"
-                          android:text="GB"
-                          android:padding="0dip"
-                          android:layout_width="fill_parent"
-                          android:layout_height="fill_parent"
-                          android:textColor="#ffffff"
-                          android:textSize="10sp"/>
+                <LinearLayout android:orientation="horizontal"
+                              android:layout_weight="1"
+                              android:padding="0dip"
+                              android:layout_width="fill_parent"
+                              android:layout_height="fill_parent">
 
-                <TextView android:id="@+id/widget_used"
-                          android:layout_weight="1"
-                          android:text="USED"
-                          android:padding="0dip"
-                          android:layout_width="fill_parent"
-                          android:layout_height="fill_parent"
-                          android:textColor="#ffffff"
-                          android:textSize="20sp"/>
-                <TextView android:layout_weight="1"
-                          android:text="GB"
-                          android:padding="0dip"
-                          android:layout_width="fill_parent"
-                          android:layout_height="fill_parent"
-                          android:textColor="#ffffff"
-                          android:textSize="10sp"/>
+                    <TextView android:id="@+id/widget_used"
+                              android:layout_weight="1"
+                              android:text="--"
+                              android:padding="0dip"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:textColor="#cccccc"
+                              android:textSize="20sp"/>
+
+                    <TextView android:layout_weight="1"
+                              android:text="/"
+                              android:padding="0dip"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:textColor="#cccccc"
+                              android:textSize="15sp"/>
+
+                    <TextView android:id="@+id/widget_total"
+                              android:layout_weight="1"
+                              android:text="--"
+                              android:padding="0dip"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:textColor="#cccccc"
+                              android:textSize="20sp"/>
+                    <TextView android:layout_weight="1"
+                              android:text="GB"
+                              android:padding="0dip"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:textColor="#cccccc"
+                              android:textSize="10sp"/>
+                </LinearLayout>
+
+                <LinearLayout android:orientation="horizontal"
+                              android:layout_weight="1"
+                              android:layout_gravity="center_horizontal"
+                              android:padding="0dip"
+                              android:layout_width="fill_parent"
+                              android:layout_height="fill_parent">
+
+                    <TextView android:id="@+id/widget_daysin"
+                              android:layout_weight="1"
+                              android:text="--"
+                              android:padding="0dip"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:textColor="#cccccc"
+                              android:textSize="20sp"/>
+
+                    <TextView android:layout_weight="1"
+                              android:text="of"
+                              android:padding="0dip"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:textColor="#cccccc"
+                              android:textSize="10sp"/>
+
+                    <TextView android:id="@+id/widget_daystotal"
+                              android:layout_weight="1"
+                              android:text="--"
+                              android:padding="0dip"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:textColor="#cccccc"
+                              android:textSize="20sp"/>
+                    <TextView android:layout_weight="1"
+                              android:text="days"
+                              android:padding="0dip"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:textColor="#cccccc"
+                              android:textSize="10sp"/>
+                </LinearLayout>
 
             </LinearLayout>
 
