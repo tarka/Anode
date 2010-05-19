@@ -61,7 +61,8 @@ public class WidgetUpdater
 
             Double usedpc = usage.getPercentageUsed();
             Integer usedint = usedpc.intValue();
-            Double usedtr = Math.floor((usage.getUsed()/GB.doubleValue()) * 100)/100;
+            Double usedtr = Math.floor((usage.getUsed()/GB.doubleValue()) * 10)/10;
+            Double intotr = Math.floor(usage.getDaysIntoPeriod() * 10) / 10;
 
 
             views.setProgressBar(R.id.widget_progress, 100, usedint, false);
@@ -71,8 +72,8 @@ public class WidgetUpdater
             views.setTextViewText(R.id.widget_total, ((Long)(usage.getTotalQuota()/GB)).toString());
             views.setTextViewText(R.id.widget_used, usedtr.toString());
 
-            views.setTextViewText(R.id.widget_daysin, "99");
-            views.setTextViewText(R.id.widget_daystotal, "99");
+            views.setTextViewText(R.id.widget_daysin, intotr.toString());
+            views.setTextViewText(R.id.widget_daystotal, usage.getDaysInPeriod().toString());
 
             mgr.updateAppWidget(id, views);
         }

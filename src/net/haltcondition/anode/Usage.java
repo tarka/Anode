@@ -71,4 +71,19 @@ public class Usage
         return c.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 
+    // Fucking static unmockable bastard ...
+    Double getDaysIntoPeriod(Calendar now)
+    {
+        Calendar start = (Calendar)rollOver.clone();
+        start.add(Calendar.MONTH, -1);
+
+        Double ms = new Double(now.getTimeInMillis() - start.getTimeInMillis());
+        return ms / 1000 / 60 / 60 / 24;
+    }
+
+    public Double getDaysIntoPeriod()
+    {
+        return getDaysIntoPeriod(Calendar.getInstance());
+    }
+
 }

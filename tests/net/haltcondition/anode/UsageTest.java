@@ -8,6 +8,7 @@ import static org.testng.Assert.fail;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 @Test
 public class UsageTest
@@ -85,5 +86,33 @@ public class UsageTest
             fail(e.getMessage(), e);
         }
         assertEquals((int)usage.getDaysInPeriod(), 31);
+    }
+
+    @Test
+    void testDaysInWhole()
+    {
+        try {
+            usage.setRollOver("2008-05-21");
+        } catch (ParseException e) {
+            fail(e.getMessage(), e);
+        }
+        Calendar now = new GregorianCalendar(2008, Calendar.APRIL, 22);
+
+        Double in = usage.getDaysIntoPeriod(now);
+        assertEquals(in, 1.0);
+    }
+
+    @Test
+    void testDaysInPartial()
+    {
+        try {
+            usage.setRollOver("2008-05-21");
+        } catch (ParseException e) {
+            fail(e.getMessage(), e);
+        }
+        Calendar now = new GregorianCalendar(2008, Calendar.MAY, 20, 12, 0);
+
+        Double in = usage.getDaysIntoPeriod(now);
+        assertEquals(in, 29.5);
     }
 }
