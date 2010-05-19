@@ -52,6 +52,13 @@
                           android:layout_height="fill_parent"
                           android:textColor="#ffffff"
                           android:textSize="20sp"/>
+                <TextView android:layout_weight="1"
+                          android:text="GB"
+                          android:padding="0dip"
+                          android:layout_width="fill_parent"
+                          android:layout_height="fill_parent"
+                          android:textColor="#ffffff"
+                          android:textSize="10sp"/>
 
                 <TextView android:id="@+id/widget_used"
                           android:layout_weight="1"
@@ -61,6 +68,13 @@
                           android:layout_height="fill_parent"
                           android:textColor="#ffffff"
                           android:textSize="20sp"/>
+                <TextView android:layout_weight="1"
+                          android:text="GB"
+                          android:padding="0dip"
+                          android:layout_width="fill_parent"
+                          android:layout_height="fill_parent"
+                          android:textColor="#ffffff"
+                          android:textSize="10sp"/>
 
             </LinearLayout>
 

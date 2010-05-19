@@ -20,6 +20,7 @@ public class WidgetUpdater
 {
 
     private static final String TAG = "Updater";
+    private static final Long GB = 1000000000L;
 
     private ExecutorService pool = Executors.newSingleThreadExecutor();
 
@@ -60,9 +61,13 @@ public class WidgetUpdater
 
             Double usedpc = usage.getPercentageUsed();
             Integer usedint = usedpc.intValue();
+            Double usedtr = Math.floor((usage.getUsed()/GB.doubleValue()) * 100)/100;
+
 
             views.setProgressBar(R.id.widget_progress, 100, usedint, false);
             views.setTextViewText(R.id.widget_usedpc, usedint.toString()+"%");
+            views.setTextViewText(R.id.widget_total, ((Long)(usage.getTotalQuota()/GB)).toString());
+            views.setTextViewText(R.id.widget_used, usedtr.toString());
 
             mgr.updateAppWidget(id, views);
         }
