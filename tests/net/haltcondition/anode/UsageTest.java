@@ -53,4 +53,15 @@ public class UsageTest
         usage.setUsed("25");
         assertEquals(Math.abs(usage.getPercentageUsed() - 25.0) < 0.01, true);
     }
+
+    @Test
+    void testDaysFeb()
+    {
+        try {
+            usage.setRollOver("2010-03-21");
+        } catch (ParseException e) {
+            fail(e.getMessage(), e);
+        }
+        assertEquals((int)usage.getDaysInPeriod(), 28);
+    }
 }

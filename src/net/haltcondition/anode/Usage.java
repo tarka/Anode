@@ -60,4 +60,15 @@ public class Usage
         return ((double)used) / ((double)totalQuota) * 100;
     }
 
+    public Integer getDaysInPeriod()
+    {
+        Calendar c = (Calendar)rollOver.clone();
+
+        // Assumption: Internode periods always cross a month boundary.
+        // This seems reasonable, otherwise how would the roll-over periods
+        // ending on the 31st?
+        c.add(Calendar.MONTH, -1);
+        return c.getActualMaximum(Calendar.DAY_OF_MONTH);
+    }
+
 }
