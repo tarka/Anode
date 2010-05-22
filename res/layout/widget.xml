@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/widget_layout"
+              android:clickable="true"
               android:orientation="horizontal"
               android:background="@drawable/appwidget_bg"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:clickable="true"
               android:paddingLeft="14dip"
               android:paddingTop="14dip"
               android:paddingBottom="15dip"
               android:paddingRight="20dip">
 
-    <ImageView android:src="@drawable/internode_logo"
+    <ImageButton android:src="@drawable/internode_logo"
+               android:id="@+id/widget_logo"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:layout_gravity="center_vertical"

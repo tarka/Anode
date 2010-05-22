@@ -1,8 +1,10 @@
 package net.haltcondition.anode;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -59,11 +61,11 @@ public class WidgetUpdater
         for (int id: widgetIds) {
             RemoteViews views = new RemoteViews(ctx.getPackageName(), R.layout.widget);
 
+            // Update vals
             Double usedpc = usage.getPercentageUsed();
             Integer usedint = usedpc.intValue();
             Double usedtr = Math.floor((usage.getUsed()/GB.doubleValue()) * 10)/10;
             Double intotr = Math.floor(usage.getDaysIntoPeriod() * 10) / 10;
-
 
             views.setProgressBar(R.id.widget_progress, 100, usedint, false);
 
@@ -80,6 +82,17 @@ public class WidgetUpdater
     }
 
     @Override
+    public void onEnabled(Context context)
+    {
+        Log.i(TAG, "ON ENABLED");
+
+        Intent intent = new Intent(context, EditAccount.class);
+        PendingIntent pi = PendingIntent.getActivity(context, 0, intent, 0);
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
+        views.setOnClickPendingIntent(R.id.widget_logo, pi);
+    }
+
+    @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)
     {
         Log.i(TAG, "Running update");
@@ -89,7 +102,7 @@ public class WidgetUpdater
         mgr = appWidgetManager;
         widgetIds = appWidgetIds;
 
-
+        // Delegate fetch to thread
         DbHelper db = new DbHelper(context);
         db.open();
         Account account = db.getAccount();
@@ -112,5 +125,11 @@ public class WidgetUpdater
 
         pool.execute(usageWorker);
 
+        // Make clickable
+        Intent intent = new Intent(context, EditAccount.class);
+        PendingIntent pi = PendingIntent.getActivity(context, 0, intent, 0);
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
+        views.setOnClickPendingIntent(R.id.widget_logo, pi);
+        
     }
 }

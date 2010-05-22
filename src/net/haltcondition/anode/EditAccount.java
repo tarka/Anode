@@ -2,6 +2,7 @@ package net.haltcondition.anode;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -70,6 +71,16 @@ public class EditAccount
         dbh.close();
     }
 
+
+    /* ************************************************************ */
+
+    @Override
+    protected void onNewIntent(Intent intent)
+    {
+        Log.i(TAG, "GOT INTENT "+intent);
+    }
+
+    
 
     /* ************************************************************ */
 
