@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -103,11 +104,9 @@ public class WidgetUpdater
         widgetIds = appWidgetIds;
 
         // Delegate fetch to thread
-        DbHelper db = new DbHelper(context);
-        db.open();
-        Account account = db.getAccount();
-        Service service = db.getService();
-        db.close();
+        SettingsHelper settings = new SettingsHelper(context);
+        Account account = settings.getAccount();
+        Service service = settings.getService();
 
         if (account == null || service == null) {
             Log.w(TAG, "Account or Service not available, doing nothing");

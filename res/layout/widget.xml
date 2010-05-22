@@ -12,7 +12,7 @@
               android:paddingBottom="15dip"
               android:paddingRight="20dip">
 
-    <ImageButton android:src="@drawable/internode_logo"
+    <ImageView android:src="@drawable/internode_logo"
                android:id="@+id/widget_logo"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"

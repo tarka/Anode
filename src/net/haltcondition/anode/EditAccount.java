@@ -2,7 +2,9 @@ package net.haltcondition.anode;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,9 +27,6 @@ public class EditAccount
 
     private EditText eUsername;
     private EditText ePassword;
-    private Account account;
-
-    private DbHelper dbh;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -41,16 +40,9 @@ public class EditAccount
         eUsername = (EditText) findViewById(R.id.username);
         ePassword = (EditText) findViewById(R.id.password);
 
-
-        dbh = new DbHelper(this);
-        dbh.open();
-
-        Account acc = dbh.getAccount();
-        if (acc != null) {
-            eUsername.setText(acc.getUsername());
-            ePassword.setText(acc.getPassword());
-        }
-
+        Account account = new SettingsHelper(this).getAccount();
+        eUsername.setText(account.getUsername());
+        ePassword.setText(account.getPassword());
 
         Button save = (Button) findViewById(R.id.save);
         save.setOnClickListener(
@@ -68,7 +60,6 @@ public class EditAccount
     @Override
     public void onDestroy() {
         super.onDestroy();
-        dbh.close();
     }
 
 
@@ -105,8 +96,8 @@ public class EditAccount
             Log.i(TAG, "Got service "+service.getServiceName()+": "+service.getServiceId());
 
             progress.dismiss();
-            dbh.setAccount(account);
-            dbh.setServiceId(account, service);
+
+            new SettingsHelper(this).setService(service);
 
             Toast.makeText(this, getResources().getString(R.string.got_service) +" \""+service.getServiceName()+"\"", Toast.LENGTH_SHORT).show();
 
@@ -126,9 +117,10 @@ public class EditAccount
     {
         Log.i(TAG, "Got account");
 
-        account = new Account();
-        account.setUsername(eUsername.getText().toString());
-        account.setPassword(ePassword.getText().toString());
+        Account account = new Account(eUsername.getText().toString(),
+                                      ePassword.getText().toString());
+        new SettingsHelper(this).setAccount(account);
+
 
         Log.i(TAG, "Fetching Service ID");
         progress = ProgressDialog.show(this, getResources().getString(R.string.fetching_service), getResources().getString(R.string.starting_worker),
