@@ -31,24 +31,24 @@
                       android:layout_weight="1"
                       android:layout_width="fill_parent"
                       android:layout_height="fill_parent"
-                      android:layout_gravity="center"
                       android:padding="0dip">
 
             <TextView android:id="@+id/widget_usedpc"
-                      android:layout_weight="1"                      
+                      android:gravity="center"
+                      android:layout_weight="1"
                       android:layout_width="fill_parent"
                       android:layout_height="fill_parent"
                       android:paddingLeft="4dip"
-                      android:text="--"
+                      android:text="--%"
                       android:textColor="#ffffff"
                       android:textSize="40sp"/>
 
             <!-- GB top, days below -->
             <LinearLayout android:orientation="vertical"
                           android:layout_weight="1"
-                          android:layout_gravity="left"
+                          android:layout_gravity="right"
                           android:paddingBottom="4dip"
-                          android:layout_width="fill_parent"
+                          android:layout_width="240dip"
                           android:layout_height="fill_parent">
 
                 <LinearLayout android:orientation="horizontal"
@@ -56,6 +56,14 @@
                               android:padding="0dip"
                               android:layout_width="fill_parent"
                               android:layout_height="fill_parent">
+
+                    <TextView android:layout_weight="1"
+                              android:text="Used"
+                              android:padding="0dip"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:textColor="#cccccc"
+                              android:textSize="10sp"/>
 
                     <TextView android:id="@+id/widget_used"
                               android:layout_weight="1"
@@ -67,12 +75,12 @@
                               android:textSize="20sp"/>
 
                     <TextView android:layout_weight="1"
-                              android:text="/"
+                              android:text="GB of"
                               android:padding="0dip"
                               android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
                               android:textColor="#cccccc"
-                              android:textSize="15sp"/>
+                              android:textSize="10sp"/>
 
                     <TextView android:id="@+id/widget_total"
                               android:layout_weight="1"
@@ -82,18 +90,10 @@
                               android:layout_height="wrap_content"
                               android:textColor="#cccccc"
                               android:textSize="20sp"/>
-                    <TextView android:layout_weight="1"
-                              android:text="GB"
-                              android:padding="0dip"
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:textColor="#cccccc"
-                              android:textSize="10sp"/>
                 </LinearLayout>
 
                 <LinearLayout android:orientation="horizontal"
                               android:layout_weight="1"
-                              android:layout_gravity="center_horizontal"
                               android:padding="0dip"
                               android:layout_width="fill_parent"
                               android:layout_height="fill_parent">
@@ -108,7 +108,7 @@
                               android:textSize="20sp"/>
 
                     <TextView android:layout_weight="1"
-                              android:text="of"
+                              android:text="days into"
                               android:padding="0dip"
                               android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
@@ -123,13 +123,6 @@
                               android:layout_height="wrap_content"
                               android:textColor="#cccccc"
                               android:textSize="20sp"/>
-                    <TextView android:layout_weight="1"
-                              android:text="days"
-                              android:padding="0dip"
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:textColor="#cccccc"
-                              android:textSize="10sp"/>
                 </LinearLayout>
 
             </LinearLayout>
