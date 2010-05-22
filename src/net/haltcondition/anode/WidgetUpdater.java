@@ -87,7 +87,7 @@ public class WidgetUpdater
     {
         Log.i(TAG, "ON ENABLED");
 
-        Intent intent = new Intent(context, EditAccount.class);
+        Intent intent = new Intent(context, Anode.class);
         PendingIntent pi = PendingIntent.getActivity(context, 0, intent, 0);
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
         views.setOnClickPendingIntent(R.id.widget_logo, pi);
@@ -125,7 +125,7 @@ public class WidgetUpdater
         pool.execute(usageWorker);
 
         // Make clickable
-        Intent intent = new Intent(context, EditAccount.class);
+        Intent intent = new Intent(context, Anode.class);
         PendingIntent pi = PendingIntent.getActivity(context, 0, intent, 0);
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
         views.setOnClickPendingIntent(R.id.widget_logo, pi);
