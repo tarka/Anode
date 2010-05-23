@@ -15,6 +15,11 @@ import android.view.View;
 public class UsageView
     extends View
 {
+    private final static String TAG = "UsageView";
+
+    private final int INODE_ORANGE = 0xFFF47836;
+    private final int INODE_DARKORANGE = 0xffc65908;
+
     public UsageView(Context context)
     {
         super(context);
@@ -33,13 +38,12 @@ public class UsageView
     @Override
     protected void onDraw(Canvas canvas)
     {
-        final int INODE_ORANGE = 0xFFF47836;
-        final int INODE_DARKORANGE = 0xffc65908;
-
-        final float size = Math.min(canvas.getWidth(), canvas.getHeight());
+        final float size = Math.min(getWidth(), getHeight());
         final float strokeOuter = size / 10f;
         final float strokeInner = size / 10f;
         final float strokeGap = strokeOuter * 0.25f;
+
+        setBackgroundColor(0xffffffff);
 
         drawProgressArc(canvas, size, 0, strokeOuter, 0.75f, INODE_DARKORANGE);
         drawProgressArc(canvas, size-((strokeInner+strokeGap)*2), strokeOuter+strokeGap, strokeInner, 0.75f, INODE_ORANGE);
