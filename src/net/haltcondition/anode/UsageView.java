@@ -38,12 +38,13 @@ public class UsageView
         final float wcenter = size / 2;
         final float hcenter = size / 2;
         final float strokew = size / 10f;
+        final float hstrokew = strokew / 2;
 
         float usedpc = 0.75f;
         float gapa = 65f;
 
 
-        RectF rect = new RectF(0, 0, size, size);
+        RectF rect = new RectF(hstrokew, hstrokew, size-hstrokew, size-hstrokew);
 
         Paint paint = new Paint();
         paint.setAntiAlias(true);
@@ -51,7 +52,7 @@ public class UsageView
         paint.setStrokeCap(Paint.Cap.ROUND);
         paint.setStyle(Paint.Style.STROKE);
 
-        canvas.rotate(90f+(gapa/2), wcenter, wcenter);
+        canvas.rotate(90f+(gapa/2), wcenter, hcenter);
 
         paint.setColor(0xffcccccc);
         canvas.drawArc(rect, 0f, 360f-gapa, false, paint);
