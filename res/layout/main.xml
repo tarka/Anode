@@ -6,7 +6,13 @@
         >
     <TextView android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:text="Hello World, Anode"
+              android:text="Hello World, Anode"/>
+
+
+    <net.haltcondition.anode.UsageView
+            android:id="@+id/surface"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             />
 </LinearLayout>
 

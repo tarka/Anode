@@ -1,9 +1,9 @@
 package net.haltcondition.anode;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.content.Intent;
 import android.view.MenuItem;
 
 public class Anode extends Activity
@@ -13,12 +13,12 @@ public class Anode extends Activity
     private static final int MENU_UPDATE =   Menu.FIRST + 1;
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
     }
 
 
