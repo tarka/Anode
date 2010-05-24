@@ -98,7 +98,7 @@
                               android:layout_width="fill_parent"
                               android:layout_height="fill_parent">
 
-                    <TextView android:id="@+id/widget_daysin"
+                    <TextView android:id="@+id/widget_quotalevel"
                               android:layout_weight="1"
                               android:text="--"
                               android:padding="0dip"
@@ -106,23 +106,30 @@
                               android:layout_height="wrap_content"
                               android:textColor="#cccccc"
                               android:textSize="20sp"/>
-
                     <TextView android:layout_weight="1"
-                              android:text="days into"
+                              android:text="GB"
                               android:padding="0dip"
                               android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
                               android:textColor="#cccccc"
                               android:textSize="10sp"/>
 
-                    <TextView android:id="@+id/widget_daystotal"
+                    <TextView android:id="@+id/widget_overunder"
                               android:layout_weight="1"
-                              android:text="--"
+                              android:text="-"
                               android:padding="0dip"
                               android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
                               android:textColor="#cccccc"
-                              android:textSize="20sp"/>
+                              android:textSize="15sp"/>
+
+                    <TextView android:layout_weight="1"
+                              android:text="quota"
+                              android:padding="0dip"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:textColor="#cccccc"
+                              android:textSize="10sp"/>
                 </LinearLayout>
 
             </LinearLayout>

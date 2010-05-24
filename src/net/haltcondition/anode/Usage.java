@@ -86,4 +86,9 @@ public class Usage
         return getDaysIntoPeriod(Calendar.getInstance());
     }
 
+    public Double getOptimalNow()
+    {
+        return getTotalQuota() / getDaysInPeriod() * getDaysIntoPeriod();
+    }
+
 }

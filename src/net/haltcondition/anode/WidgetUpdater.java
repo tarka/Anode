@@ -11,6 +11,8 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -56,6 +58,8 @@ public class WidgetUpdater
         return true;
     }
 
+    
+    private static final NumberFormat formatter = new DecimalFormat("#0.0");
 
     private void setUsage(Usage usage)
     {
@@ -63,20 +67,17 @@ public class WidgetUpdater
             RemoteViews views = new RemoteViews(ctx.getPackageName(), R.layout.widget);
 
             // Update vals
-            Double usedpc = usage.getPercentageUsed();
-            Integer usedint = usedpc.intValue();
-            Double usedtr = Math.floor((usage.getUsed()/GB.doubleValue()) * 10)/10;
-            Double intotr = Math.floor(usage.getDaysIntoPeriod() * 10) / 10;
+            Double diff = usage.getOptimalNow() - usage.getUsed();
 
-            views.setProgressBar(R.id.widget_progress, 100, usedint, false);
+            views.setProgressBar(R.id.widget_progress, 100, usage.getPercentageUsed().intValue(), false);
 
-            views.setTextViewText(R.id.widget_usedpc, usedint.toString()+"%");
+            views.setTextViewText(R.id.widget_usedpc, usage.getPercentageUsed().intValue()+"%");
 
             views.setTextViewText(R.id.widget_total, ((Long)(usage.getTotalQuota()/GB)).toString());
-            views.setTextViewText(R.id.widget_used, usedtr.toString());
+            views.setTextViewText(R.id.widget_used, formatter.format(usage.getUsed() / GB));
 
-            views.setTextViewText(R.id.widget_daysin, intotr.toString());
-            views.setTextViewText(R.id.widget_daystotal, usage.getDaysInPeriod().toString());
+            views.setTextViewText(R.id.widget_quotalevel, formatter.format(diff / GB));
+            views.setTextViewText(R.id.widget_overunder, diff > 0 ? "under" : "over");
 
             mgr.updateAppWidget(id, views);
         }
