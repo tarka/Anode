@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+    <TextView android:id="@+id/settings_username_label"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Username"
+              android:layout_alignParentLeft="true"
+              android:layout_alignParentTop="true"/>
+
+    <EditText android:id="@+id/username"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:layout_toRightOf="@id/settings_username_label"/>
+
+    <EditText android:id="@+id/password"
+              android:password="true"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:layout_below="@id/username"
+              android:layout_alignLeft="@id/username"/>
+
+    <TextView android:id="@+id/settings_password_label"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Password"
+              android:layout_below="@id/settings_username_label"
+              android:layout_alignLeft="@id/settings_username_label"
+              android:layout_alignTop="@id/password"/>
+
+    <Button android:id="@+id/save"
+            android:text="Save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/password"
+            android:layout_alignParentRight="true"/>
+
+</RelativeLayout>

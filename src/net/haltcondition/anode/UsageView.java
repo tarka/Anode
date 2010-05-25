@@ -43,8 +43,6 @@ public class UsageView
         final float strokeInner = size / 10f;
         final float strokeGap = strokeOuter * 0.25f;
 
-        setBackgroundColor(0xffffffff);
-
         drawProgressArc(canvas, size, 0, strokeOuter, 0.75f, INODE_DARKORANGE);
         drawProgressArc(canvas, size-((strokeInner+strokeGap)*2), strokeOuter+strokeGap, strokeInner, 0.75f, INODE_ORANGE);
 
