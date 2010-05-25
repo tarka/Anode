@@ -3,11 +3,14 @@ package net.haltcondition.anode;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class Anode extends Activity
 {
+    private static final String TAG = "Anode";
+
     // FIXME: Ugh, must be nicer way
     private static final int MENU_SETTINGS = Menu.FIRST;
     private static final int MENU_UPDATE =   Menu.FIRST + 1;
@@ -19,7 +22,7 @@ public class Anode extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-    }
+    }    
 
 
     /* ************************************************************ */

@@ -84,17 +84,6 @@ public class WidgetUpdater
     }
 
     @Override
-    public void onEnabled(Context context)
-    {
-        Log.i(TAG, "ON ENABLED");
-
-        Intent intent = new Intent(context, Anode.class);
-        PendingIntent pi = PendingIntent.getActivity(context, 0, intent, 0);
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
-        views.setOnClickPendingIntent(R.id.widget_logo, pi);
-    }
-
-    @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)
     {
         Log.i(TAG, "Running update");
@@ -127,9 +116,10 @@ public class WidgetUpdater
 
         // Make clickable
         Intent intent = new Intent(context, Anode.class);
-        PendingIntent pi = PendingIntent.getActivity(context, 0, intent, 0);
+
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
-        views.setOnClickPendingIntent(R.id.widget_logo, pi);
-        
+        PendingIntent pi = PendingIntent.getActivity(context, 0, intent, 0);
+        views.setOnClickPendingIntent(R.id.widget_layout, pi);
+        appWidgetManager.updateAppWidget(appWidgetIds, views);
     }
 }
