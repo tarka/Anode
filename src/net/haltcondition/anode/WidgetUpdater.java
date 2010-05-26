@@ -1,8 +1,10 @@
 package net.haltcondition.anode;
 
+import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -26,12 +28,44 @@ public class WidgetUpdater
     private static final String TAG = "Updater";
     private static final Long GB = 1000000000L;
 
+    private static final String USAGE_ACTON = "net.haltcondition.anode.USAGE_BROADCAST";
+
     private ExecutorService pool = Executors.newSingleThreadExecutor();
 
     // Save for when workers return
     private Context ctx;
     private AppWidgetManager mgr;
     private int[] widgetIds;
+
+    @Override
+    public void onEnabled(Context context)
+    {
+        super.onEnabled(context);
+
+        Log.i(TAG, "DOING ENABLED");
+
+        AlarmManager alarm = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+
+        Intent i = new Intent(USAGE_ACTON);
+        PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
+
+        alarm.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis(), AlarmManager.INTERVAL_FIFTEEN_MINUTES, pi);
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent)
+    {
+        if (! intent.getAction().equals(USAGE_ACTON)) {
+            super.onReceive(context, intent);
+            return;
+        }
+
+        Log.i(TAG, "Got usage update broadcast action");
+
+        AppWidgetManager awm = AppWidgetManager.getInstance(context);
+        onUpdate(context, awm, awm.getAppWidgetIds(new ComponentName(context, WidgetUpdater.class)));
+
+    }
 
     @Override
     public boolean handleMessage(Message msg) {
@@ -58,7 +92,7 @@ public class WidgetUpdater
     }
 
     
-    private static final NumberFormat formatter = new DecimalFormat("#0.0");
+    private static final NumberFormat oneDP = new DecimalFormat("#0.0");
 
     private void setUsage(Usage usage)
     {
@@ -73,9 +107,9 @@ public class WidgetUpdater
             views.setTextViewText(R.id.widget_usedpc, usage.getPercentageUsed().intValue()+"%");
 
             views.setTextViewText(R.id.widget_total, ((Long)(usage.getTotalQuota()/GB)).toString());
-            views.setTextViewText(R.id.widget_used, formatter.format(usage.getUsed() / GB));
+            views.setTextViewText(R.id.widget_used, oneDP.format(usage.getUsed() / GB));
 
-            views.setTextViewText(R.id.widget_quotalevel, formatter.format(diff / GB));
+            views.setTextViewText(R.id.widget_quotalevel, oneDP.format(diff / GB));
             views.setTextViewText(R.id.widget_overunder, diff > 0 ? "under" : "over");
 
             mgr.updateAppWidget(id, views);
