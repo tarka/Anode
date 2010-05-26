@@ -33,11 +33,23 @@
               android:layout_alignLeft="@id/settings_username_label"
               android:layout_alignTop="@id/password"/>
 
+    <View android:id="@+id/hr1"
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:layout_below="@id/password"
+            android:background="#ffaaaaaa"/>
+
+    <!--<Spinner android:id="@+id/updatefreq"-->
+             <!--android:layout_width="fill_parent"-->
+             <!--android:layout_height="wrap_content"-->
+             <!--android:layout_below="@id/hr1"-->
+             <!--android:prompt="Update Frequency"/>-->
+
     <Button android:id="@+id/save"
             android:text="Save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/password"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

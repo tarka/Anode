@@ -8,15 +8,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.*;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
-public class EditAccount
+public class EditSettings
     extends Activity
     implements Handler.Callback
 
@@ -41,6 +39,10 @@ public class EditAccount
         Account account = new SettingsHelper(this).getAccount();
         eUsername.setText(account.getUsername());
         ePassword.setText(account.getPassword());
+
+        // Update frequency
+        //Spinner s = (Spinner)findViewById(R.id.updatefreq);
+        
 
         Button save = (Button) findViewById(R.id.save);
         save.setOnClickListener(
@@ -67,6 +69,7 @@ public class EditAccount
     protected void onNewIntent(Intent intent)
     {
         Log.i(TAG, "GOT INTENT "+intent);
+        super.onNewIntent(intent);
     }
 
     

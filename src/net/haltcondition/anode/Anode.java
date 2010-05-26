@@ -3,7 +3,6 @@ package net.haltcondition.anode;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -45,7 +44,7 @@ public class Anode extends Activity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
           case MENU_SETTINGS:
-            Intent i = new Intent(this, EditAccount.class);
+            Intent i = new Intent(this, EditSettings.class);
             startActivityForResult(i, MENU_SETTINGS);
             return true;
           case MENU_UPDATE:

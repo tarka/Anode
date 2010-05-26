@@ -5,7 +5,6 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -115,7 +114,7 @@ public class WidgetUpdater
         pool.execute(usageWorker);
 
         // Make clickable
-        Intent intent = new Intent(context, Anode.class);
+        Intent intent = new Intent(context, EditSettings.class);
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
         PendingIntent pi = PendingIntent.getActivity(context, 0, intent, 0);
