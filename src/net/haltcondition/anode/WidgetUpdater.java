@@ -91,11 +91,11 @@ public class WidgetUpdater
         return true;
     }
 
-    
-    private static final NumberFormat oneDP = new DecimalFormat("#0.0");
 
     private void setUsage(Usage usage)
     {
+        final NumberFormat oneDP = new DecimalFormat("#0.0");
+
         for (int id: widgetIds) {
             RemoteViews views = new RemoteViews(ctx.getPackageName(), R.layout.widget);
 
