@@ -107,7 +107,7 @@ public class WidgetUpdater
             views.setTextViewText(R.id.widget_usedpc, usage.getPercentageUsed().intValue()+"%");
 
             views.setTextViewText(R.id.widget_total, ((Long)(usage.getTotalQuota()/GB)).toString());
-            views.setTextViewText(R.id.widget_used, oneDP.format(usage.getUsed() / GB));
+            views.setTextViewText(R.id.widget_used, oneDP.format(usage.getUsed().doubleValue() / GB));
 
             views.setTextViewText(R.id.widget_quotalevel, oneDP.format(diff / GB));
             views.setTextViewText(R.id.widget_overunder, diff > 0 ? "under" : "over");
