@@ -9,20 +9,21 @@
     <application android:label="@string/app_name"
                  android:icon="@drawable/internode_logo">
 
-        <activity android:name="Anode"
-                  android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <!--<activity android:name="Anode"-->
+                  <!--android:label="@string/app_name">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
 
         <activity android:name=".EditSettings" />
 
         <receiver android:name=".WidgetUpdater" android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="net.haltcondition.anode.USAGE_BROADCAST"/>
+                <action android:name="net.haltcondition.anode.broadcast.USAGE_ALARM"/>
+                <action android:name="net.haltcondition.anode.broadcast.CONFIG_CHANGED"/>
             </intent-filter>
 
             <meta-data android:name="android.appwidget.provider"

@@ -2,6 +2,7 @@ package net.haltcondition.anode;
 
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -161,6 +162,9 @@ public class EditSettings
         Account account = new Account(eUsername.getText().toString(),
                                       ePassword.getText().toString());
         settings.setAll(account, svc, updateFreq);
+
+        Intent i = new Intent(Common.SETTINGS_UPDATE);
+        sendBroadcast(i);
 
     }
 

@@ -25,6 +25,11 @@ public class SettingsHelper
         settings = ctx.getSharedPreferences(PREF_FILE, Context.MODE_PRIVATE);
     }
 
+    public SharedPreferences getSharedPreferences()
+    {
+        return settings;
+    }
+
     public void setAccount(Account acc)
     {
         SharedPreferences.Editor setedit = settings.edit();

@@ -1,14 +1,12 @@
 package net.haltcondition.anode;
 
 import android.app.AlarmManager;
-import android.app.Application;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -24,12 +22,9 @@ import java.util.concurrent.Executors;
  */
 public class WidgetUpdater
     extends AppWidgetProvider
-    implements Handler.Callback, SharedPreferences.OnSharedPreferenceChangeListener
+    implements Handler.Callback
 {
     private static final String TAG = "Updater";
-    private static final Long GB = 1000000000L;
-
-    private static final String USAGE_ACTON = "net.haltcondition.anode.USAGE_BROADCAST";
 
     private ExecutorService pool = Executors.newSingleThreadExecutor();
 
@@ -55,7 +50,7 @@ public class WidgetUpdater
 
         SettingsHelper settings = new SettingsHelper(context);
 
-        Intent i = new Intent(USAGE_ACTON);
+        Intent i = new Intent(Common.USAGE_ALARM);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarm = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
@@ -65,16 +60,18 @@ public class WidgetUpdater
     @Override
     public void onReceive(Context context, Intent intent)
     {
-        if (! intent.getAction().equals(USAGE_ACTON)) {
+        if (intent.getAction().equals(Common.USAGE_ALARM)) {
+            Log.i(TAG, "Got usage update alarm");
+            AppWidgetManager awm = AppWidgetManager.getInstance(context);
+            onUpdate(context, awm, awm.getAppWidgetIds(new ComponentName(context, WidgetUpdater.class)));
+
+        } else if (intent.getAction().equals(Common.SETTINGS_UPDATE)) {
+            Log.i(TAG, "Got settings update broadcast");
+            setAlarm(context);
+
+        } else {
             super.onReceive(context, intent);
-            return;
         }
-
-        Log.i(TAG, "Got usage update broadcast action");
-
-        AppWidgetManager awm = AppWidgetManager.getInstance(context);
-        onUpdate(context, awm, awm.getAppWidgetIds(new ComponentName(context, WidgetUpdater.class)));
-
     }
 
     @Override
@@ -116,10 +113,10 @@ public class WidgetUpdater
 
             views.setTextViewText(R.id.widget_usedpc, usage.getPercentageUsed().intValue()+"%");
 
-            views.setTextViewText(R.id.widget_total, ((Long)(usage.getTotalQuota()/GB)).toString());
-            views.setTextViewText(R.id.widget_used, oneDP.format(usage.getUsed().doubleValue() / GB));
+            views.setTextViewText(R.id.widget_total, ((Long)(usage.getTotalQuota()/ Common.GB)).toString());
+            views.setTextViewText(R.id.widget_used, oneDP.format(usage.getUsed().doubleValue() / Common.GB));
 
-            views.setTextViewText(R.id.widget_quotalevel, oneDP.format(diff / GB));
+            views.setTextViewText(R.id.widget_quotalevel, oneDP.format(diff / Common.GB));
             views.setTextViewText(R.id.widget_overunder, diff > 0 ? "under" : "over");
 
             mgr.updateAppWidget(id, views);
@@ -164,15 +161,5 @@ public class WidgetUpdater
         PendingIntent pi = PendingIntent.getActivity(context, 0, intent, 0);
         views.setOnClickPendingIntent(R.id.widget_layout, pi);
         appWidgetManager.updateAppWidget(appWidgetIds, views);
-    }
-
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s)
-    {
-        // FIXME: Use last known context; is there a better method?
-        if (ctx != null) {
-            setAlarm(ctx);
-        }
     }
 }
