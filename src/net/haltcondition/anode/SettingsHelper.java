@@ -16,12 +16,10 @@ public class SettingsHelper
     public static final String PREF_SVCID = "svcid";
     public static final String PREF_UPDATE = "updatefreq";
 
-    private final Context ctx;
     private final SharedPreferences settings;
 
     public SettingsHelper(Context ctx)
     {
-        this.ctx = ctx;
         settings = ctx.getSharedPreferences(PREF_FILE, Context.MODE_PRIVATE);
     }
 
