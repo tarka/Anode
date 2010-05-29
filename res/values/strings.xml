@@ -11,4 +11,6 @@
     <string name="got_service">Got service</string>
     <string name="fetching_service">Fetching Service Info</string>
     <string name="starting_worker">Starting HTTP Worker ...</string>
+
+    <string name="update_prompt">Update Frequency</string>
 </resources>

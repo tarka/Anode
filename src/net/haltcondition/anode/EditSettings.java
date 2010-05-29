@@ -1,6 +1,7 @@
 package net.haltcondition.anode;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -21,8 +24,28 @@ public class EditSettings
 {
     private static final String TAG = "EditAccount";
 
+    private static final long DEFAULT_FREQ = AlarmManager.INTERVAL_HOUR;
+
     private EditText eUsername;
     private EditText ePassword;
+    private long updateFreq = DEFAULT_FREQ;
+
+    private static class DelayOption {
+        public String name;
+        public Long alarmCode;
+        public DelayOption(String name, Long code) {
+            this.name = name;
+            this.alarmCode = code;
+        }
+
+        @Override public String toString() { return name; }
+    }
+
+    private static final DelayOption DO_15M = new DelayOption("15 minutes", AlarmManager.INTERVAL_FIFTEEN_MINUTES);
+    private static final DelayOption DO_30M = new DelayOption("30 minutes", AlarmManager.INTERVAL_HALF_HOUR);
+    private static final DelayOption DO_60M = new DelayOption("Hourly", AlarmManager.INTERVAL_HOUR);
+    private static final DelayOption DO_12H = new DelayOption("12 Hours", AlarmManager.INTERVAL_HALF_DAY);
+
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -32,26 +55,51 @@ public class EditSettings
 
         Log.i(TAG, "Starting account edit");
 
+        final SettingsHelper settings = new SettingsHelper(this);
 
+        // Account
         eUsername = (EditText) findViewById(R.id.username);
         ePassword = (EditText) findViewById(R.id.password);
 
-        Account account = new SettingsHelper(this).getAccount();
+        Account account = settings.getAccount();
         eUsername.setText(account.getUsername());
         ePassword.setText(account.getPassword());
 
         // Update frequency
-        //Spinner s = (Spinner)findViewById(R.id.updatefreq);
-        
+        Spinner s = (Spinner)findViewById(R.id.refreshinterval);
+
+        long curr = settings.getUpdateInterval();
+        final List<DelayOption> freqlist = new ArrayList<DelayOption>();
+        freqlist.add(DO_15M);
+        freqlist.add(DO_30M);
+        freqlist.add(DO_60M);
+        freqlist.add(DO_12H);
+
+        ArrayAdapter<DelayOption> options = new ArrayAdapter<DelayOption>(this, android.R.layout.simple_spinner_item, freqlist);
+        options.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        s.setAdapter(options);
+        for (DelayOption o: freqlist) {
+            if (o.alarmCode == curr) {
+                s.setSelection(freqlist.indexOf(o));
+                break;
+            }
+        }
+        s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                updateFreq = freqlist.get(position).alarmCode;
+            }
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                updateFreq = DEFAULT_FREQ;
+            }
+        });
+
 
         Button save = (Button) findViewById(R.id.save);
         save.setOnClickListener(
             new View.OnClickListener() {
                 public void onClick(View view) {
                     Log.i(TAG, "Got save button click");
-                    saveState();
-                    //setResult(RESULT_OK);
-                    //finish();
+                    initiateServiceFetch();
                 }
             });
     }
@@ -63,21 +111,11 @@ public class EditSettings
     }
 
 
-    /* ************************************************************ */
-
-    @Override
-    protected void onNewIntent(Intent intent)
-    {
-        Log.i(TAG, "GOT INTENT "+intent);
-        super.onNewIntent(intent);
-    }
-
-    
 
     /* ************************************************************ */
 
     private ProgressDialog progress;
-    private ExecutorService pool = Executors.newFixedThreadPool(10);
+    private ExecutorService pool = Executors.newSingleThreadExecutor();
 
     @Override
     public boolean handleMessage(Message msg)
@@ -98,7 +136,7 @@ public class EditSettings
 
             progress.dismiss();
 
-            new SettingsHelper(this).setService(service);
+            saveSettings(service);
 
             Toast.makeText(this, getResources().getString(R.string.got_service) +" \""+service.getServiceName()+"\"", Toast.LENGTH_SHORT).show();
 
@@ -114,17 +152,27 @@ public class EditSettings
         return true;
     }
 
-    private void saveState()
+    private void saveSettings(Service svc)
     {
         Log.i(TAG, "Got account");
 
+        final SettingsHelper settings = new SettingsHelper(this);
+
         Account account = new Account(eUsername.getText().toString(),
                                       ePassword.getText().toString());
-        new SettingsHelper(this).setAccount(account);
+        settings.setAll(account, svc, updateFreq);
 
+    }
 
+    private void initiateServiceFetch()
+    {
         Log.i(TAG, "Fetching Service ID");
-        progress = ProgressDialog.show(this, getResources().getString(R.string.fetching_service), getResources().getString(R.string.starting_worker),
+
+        Account account = new Account(eUsername.getText().toString(),
+                                      ePassword.getText().toString());
+
+        progress = ProgressDialog.show(this, getResources().getString(R.string.fetching_service),
+                                       getResources().getString(R.string.starting_worker),
                                        false, true);
 
         String uri = getResources().getString(R.string.inode_api_url);

@@ -36,14 +36,23 @@
     <View android:id="@+id/hr1"
             android:layout_width="fill_parent"
             android:layout_height="1dip"
+            android:padding="4dip"
             android:layout_below="@id/password"
             android:background="#ffaaaaaa"/>
 
-    <!--<Spinner android:id="@+id/updatefreq"-->
-             <!--android:layout_width="fill_parent"-->
-             <!--android:layout_height="wrap_content"-->
-             <!--android:layout_below="@id/hr1"-->
-             <!--android:prompt="Update Frequency"/>-->
+    <Spinner android:id="@+id/refreshinterval"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:layout_below="@id/hr1"
+             android:layout_alignLeft="@id/password"
+             android:prompt="@string/update_prompt"/>
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Update"
+              android:layout_alignTop="@id/refreshinterval"
+              android:layout_below="@id/hr1"
+              android:layout_alignParentLeft="true"/>
 
     <Button android:id="@+id/save"
             android:text="Save"

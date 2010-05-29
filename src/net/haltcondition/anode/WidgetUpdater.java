@@ -1,12 +1,14 @@
 package net.haltcondition.anode;
 
 import android.app.AlarmManager;
+import android.app.Application;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -22,9 +24,8 @@ import java.util.concurrent.Executors;
  */
 public class WidgetUpdater
     extends AppWidgetProvider
-    implements Handler.Callback
+    implements Handler.Callback, SharedPreferences.OnSharedPreferenceChangeListener
 {
-
     private static final String TAG = "Updater";
     private static final Long GB = 1000000000L;
 
@@ -41,15 +42,24 @@ public class WidgetUpdater
     public void onEnabled(Context context)
     {
         super.onEnabled(context);
-
+        
         Log.i(TAG, "DOING ENABLED");
 
-        AlarmManager alarm = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        ctx = context;
+        setAlarm(context);
+    }
+
+    private void setAlarm(Context context)
+    {
+        Log.i(TAG, "Setting Alarm");
+
+        SettingsHelper settings = new SettingsHelper(context);
 
         Intent i = new Intent(USAGE_ACTON);
-        PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
+        PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        alarm.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis(), AlarmManager.INTERVAL_FIFTEEN_MINUTES, pi);
+        AlarmManager alarm = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        alarm.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis(), settings.getUpdateInterval(), pi);
     }
 
     @Override
@@ -121,7 +131,7 @@ public class WidgetUpdater
     {
         Log.i(TAG, "Running update");
 
-        // FIXME: Is this OK to do?
+        // FIXME: Is this OK?
         ctx = context;
         mgr = appWidgetManager;
         widgetIds = appWidgetIds;
@@ -154,5 +164,15 @@ public class WidgetUpdater
         PendingIntent pi = PendingIntent.getActivity(context, 0, intent, 0);
         views.setOnClickPendingIntent(R.id.widget_layout, pi);
         appWidgetManager.updateAppWidget(appWidgetIds, views);
+    }
+
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s)
+    {
+        // FIXME: Use last known context; is there a better method?
+        if (ctx != null) {
+            setAlarm(ctx);
+        }
     }
 }
