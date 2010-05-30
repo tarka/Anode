@@ -38,7 +38,7 @@
             android:layout_height="1dip"
             android:padding="4dip"
             android:layout_below="@id/password"
-            android:background="#ffaaaaaa"/>
+            android:background="#ff888888"/>
 
     <Spinner android:id="@+id/refreshinterval"
              android:layout_width="fill_parent"
@@ -64,12 +64,18 @@
               android:layout_alignParentLeft="true"
               android:layout_alignTop="@id/wifi_only"/>
 
+    <View android:id="@+id/hr2"
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:padding="4dip"
+            android:layout_below="@id/wifi_only"
+            android:background="#ff888888"/>
 
     <Button android:id="@+id/save"
             android:text="Save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"/>
+            android:layout_below="@id/hr2"/>
 
 </RelativeLayout>
