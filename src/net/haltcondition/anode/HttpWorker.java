@@ -13,12 +13,24 @@ import java.net.URISyntaxException;
 
 /**
  * Copyright Steve Smith (tarkasteve@gmail.com): 08/05/2010
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation..
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 public class HttpWorker<RType>
     extends ThreadWorker<RType>
 {
     private static final String TAG = "HttpWorker";
-    
+
     private Account account;
     private String url;
     private HttpResultHandler<RType> resultHandler;
@@ -67,7 +79,7 @@ public class HttpWorker<RType>
 
             } else if (response.getStatusLine().getStatusCode() == 200) {
                 Log.d(TAG, "Status: "+response.getStatusLine());
-                
+
                 sendUpdate("Parsing XML ...");
                 sendResult(resultHandler.parse(response.getEntity().getContent()));
 

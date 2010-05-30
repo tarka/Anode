@@ -12,6 +12,18 @@ import java.text.ParseException;
 
 /**
  * Copyright Steve Smith (tarkasteve@gmail.com): 15/05/2010
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation..
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 public class UsageParser
     extends DefaultHandler
@@ -21,7 +33,7 @@ public class UsageParser
 
     private Usage usage = null;
     private boolean inElement = false;
-    private static final String ELEMENT = "traffic"; 
+    private static final String ELEMENT = "traffic";
 
     @Override
     public Usage parse(InputStream in)

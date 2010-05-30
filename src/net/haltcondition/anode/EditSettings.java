@@ -20,6 +20,21 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
+/**
+ * Copyright Steve Smith (tarkasteve@gmail.com): 2010
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation..
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 public class EditSettings
     extends Activity
     implements Handler.Callback
@@ -28,7 +43,7 @@ public class EditSettings
     private static final String TAG = "EditAccount";
 
     private static final int MENU_ABOUT = Menu.FIRST;
-    
+
     private static final long DEFAULT_FREQ = AlarmManager.INTERVAL_HOUR;
 
     private EditText eUsername;
@@ -207,7 +222,7 @@ public class EditSettings
         boolean result = super.onCreateOptionsMenu(menu);
         menu.add(0, MENU_ABOUT, 0, R.string.menu_about)
             .setIcon(android.R.drawable.ic_menu_info_details);
-        
+
         return result;
     }
 
@@ -216,7 +231,7 @@ public class EditSettings
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
           case MENU_ABOUT:
-//            startActivity(new Intent(this, EditSettings.class));
+            startActivity(new Intent(this, About.class));
             return true;
         }
 
