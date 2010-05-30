@@ -45,6 +45,15 @@
     <TextView android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:layout_weight="1"
+              android:layout_gravity="center_horizontal"
+              android:gravity="center_horizontal"
+              android:text="Copyright Steve Smith (tarkasteve@gmail.com) 2010"/>
+
+    <TextView android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:layout_gravity="center_horizontal"
+              android:gravity="center_horizontal"
               android:text="This software is licensed under the GPL version 3.  Internode logo used with permission."/>
 
 
