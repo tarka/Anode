@@ -20,6 +20,9 @@ public class UsageView
     private final int INODE_ORANGE = 0xFFF47836;
     private final int INODE_DARKORANGE = 0xffc65908;
 
+    private float dataUsedPC = 0.0f;
+    private float intoPeriodPC = 0.0f;
+
     public UsageView(Context context)
     {
         super(context);
@@ -35,16 +38,28 @@ public class UsageView
         super(context, attrs, defStyle);
     }
 
+    public void setUsage(float dataUsedPC, float intoPeriodPC)
+    {
+        Log.i(TAG, "Got Usage: "+dataUsedPC+", "+intoPeriodPC);
+        this.dataUsedPC = dataUsedPC;
+        this.intoPeriodPC = intoPeriodPC;
+        invalidate();  // Force redraw
+    }
+
     @Override
     protected void onDraw(Canvas canvas)
     {
+        Log.d(TAG, "Doing draw command");
+
         final float size = Math.min(getWidth(), getHeight());
         final float strokeOuter = size / 10f;
         final float strokeInner = size / 10f;
         final float strokeGap = strokeOuter * 0.25f;
 
-        drawProgressArc(canvas, size, 0, strokeOuter, 0.75f, INODE_DARKORANGE);
-        drawProgressArc(canvas, size-((strokeInner+strokeGap)*2), strokeOuter+strokeGap, strokeInner, 0.75f, INODE_ORANGE);
+        drawProgressArc(canvas, size, 0, strokeOuter,
+                        dataUsedPC, INODE_DARKORANGE);
+        drawProgressArc(canvas, size-((strokeInner+strokeGap)*2), strokeOuter+strokeGap, strokeInner,
+                        intoPeriodPC, INODE_ORANGE);
 
     }
 

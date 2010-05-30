@@ -69,6 +69,11 @@ public class WidgetUpdater
             Log.i(TAG, "Got settings update broadcast");
             setAlarm(context);
 
+        } else if (intent.getAction().equals(Common.USAGE_UPDATE)) {
+            Log.i(TAG, "Got usage update broadcast");
+            // FIXME: Needs parcelable usage
+            //setUsage((Usage)intent.getSerializableExtra(Common.USAGE_UPDATE));
+
         } else {
             super.onReceive(context, intent);
         }
@@ -91,7 +96,7 @@ public class WidgetUpdater
             // FIXME: Display somehow
 
         } else if (msg.what == HttpWorker.MsgCode.RESULT.ordinal()) {
-            Log.i(TAG, "Result: "+msg.obj);
+            Log.i(TAG, "Got Result");
             setUsage((Usage)msg.obj);
         }
 
@@ -143,15 +148,9 @@ public class WidgetUpdater
             return;
         }
 
-        String uri = context.getResources().getString(R.string.inode_api_url)
-                     + service.getServiceId()
-                     + "/usage";
-
-        UsageParser parser = new UsageParser();
-
         HttpWorker<Usage> usageWorker =
-            new HttpWorker<Usage>(new Handler(this), account, uri, parser);
-
+            new HttpWorker<Usage>(new Handler(this), account,
+                                  Common.usageUri(service), new UsageParser());
         pool.execute(usageWorker);
 
         // Make clickable

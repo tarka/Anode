@@ -1,5 +1,6 @@
 package net.haltcondition.anode;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -57,7 +58,7 @@ public class Usage
 
     public Double getPercentageUsed()
     {
-        return ((double)used) / ((double)totalQuota) * 100;
+        return (used.doubleValue()) / (totalQuota.doubleValue()) * 100.0;
     }
 
     public Integer getDaysInPeriod()
@@ -84,6 +85,11 @@ public class Usage
     public Double getDaysIntoPeriod()
     {
         return getDaysIntoPeriod(Calendar.getInstance());
+    }
+
+    public Double getPercentageIntoPeriod()
+    {
+        return getDaysIntoPeriod() / getDaysInPeriod() * 100.0;
     }
 
     public Double getOptimalNow()

@@ -179,12 +179,9 @@ public class EditSettings
                                        getResources().getString(R.string.starting_worker),
                                        false, true);
 
-        String uri = getResources().getString(R.string.inode_api_url);
-        ServiceParser parser = new ServiceParser();
 
         HttpWorker<Service> serviceWorker =
-            new HttpWorker<Service>(new Handler(this), account, uri, parser);
-
+            new HttpWorker<Service>(new Handler(this), account, Common.INODE_URI_BASE, new ServiceParser());
         pool.execute(serviceWorker);
     }
 

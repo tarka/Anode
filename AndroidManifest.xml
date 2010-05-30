@@ -9,13 +9,16 @@
     <application android:label="@string/app_name"
                  android:icon="@drawable/internode_logo">
 
-        <!--<activity android:name="Anode"-->
-                  <!--android:label="@string/app_name">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        <!--</activity>-->
+        <activity android:name="Anode"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="net.haltcondition.anode.broadcast.USAGE_UPDATE"/>
+            </intent-filter>
+        </activity>
 
         <activity android:name=".EditSettings" />
 
@@ -24,6 +27,7 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="net.haltcondition.anode.broadcast.USAGE_ALARM"/>
                 <action android:name="net.haltcondition.anode.broadcast.CONFIG_CHANGED"/>
+                <action android:name="net.haltcondition.anode.broadcast.USAGE_UPDATE"/>
             </intent-filter>
 
             <meta-data android:name="android.appwidget.provider"

@@ -3,10 +3,19 @@ package net.haltcondition.anode;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
-public class Anode extends Activity
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class Anode
+    extends Activity
+    implements Handler.Callback
 {
     private static final String TAG = "Anode";
 
@@ -14,14 +23,78 @@ public class Anode extends Activity
     private static final int MENU_SETTINGS = Menu.FIRST;
     private static final int MENU_UPDATE =   Menu.FIRST + 1;
 
+    private ExecutorService pool = Executors.newSingleThreadExecutor();
+
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        
-    }    
+
+    }
+
+
+    /* ************************************************************ */
+    // Upater thread
+
+    private void fetchUsage()
+    {
+        // Delegate fetch to thread
+        SettingsHelper settings = new SettingsHelper(this);
+        Account account = settings.getAccount();
+        Service service = settings.getService();
+
+        if (account == null || service == null) {
+            Log.w(TAG, "Account or Service not available, doing nothing");
+            return;
+        }
+
+        HttpWorker<Usage> usageWorker =
+            new HttpWorker<Usage>(new Handler(this), account,
+                                  Common.usageUri(service), new UsageParser());
+        pool.execute(usageWorker);
+
+    }
+
+    @Override
+    public boolean handleMessage(Message msg) {
+        Log.i(TAG, "Got message: "+ msg.what);
+
+        if (msg.what == HttpWorker.MsgCode.ENDMSG.ordinal()) {
+            // Not used
+            Log.w(TAG, "Got unused ENDMSG");
+
+        } else if (msg.what == HttpWorker.MsgCode.UPDATEMSG.ordinal()) {
+            // Not used, just logged for now
+            Log.i(TAG, "Update: "+msg.obj);
+
+        } else if (msg.what == HttpWorker.MsgCode.ERRORMSG.ordinal()) {
+            Log.e(TAG, "Error: "+msg.obj);
+            // FIXME: Display somehow
+
+        } else if (msg.what == HttpWorker.MsgCode.RESULT.ordinal()) {
+            Log.i(TAG, "Got Result");
+            setUsage((Usage)msg.obj);
+        }
+
+        return true;
+    }
+
+
+    private void setUsage(Usage usage) 
+    {
+        UsageView view = (UsageView) findViewById(R.id.main_usageview);
+        view.setUsage(usage.getPercentageUsed().floatValue()/100, usage.getPercentageIntoPeriod().floatValue()/100);
+
+
+        // FIXME: Needs parcelable usage
+        // Broadcast to others (mainly widget)
+        //Intent i = new Intent(Common.USAGE_UPDATE);
+        //i.putExtra(Common.USAGE_UPDATE, usage);
+        //sendBroadcast(i);
+    }
+
 
 
     /* ************************************************************ */
@@ -48,7 +121,7 @@ public class Anode extends Activity
             startActivityForResult(i, MENU_SETTINGS);
             return true;
           case MENU_UPDATE:
-            //sync();
+            fetchUsage();
             return true;
         }
 

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Anode</string>
-    <string name="inode_api_url">https://customer-webtools-api.internode.on.net/api/v1.5/</string>
     <string name="inod_status_url">http://feeds.internode.on.net/network-status.rss</string>
     <string name="menu_settings">Edit Account</string>
     <string name="menu_update">Sync Account</string>
