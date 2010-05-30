@@ -12,4 +12,5 @@
     <string name="starting_worker">Starting HTTP Worker ...</string>
 
     <string name="update_prompt">Update Frequency</string>
+    <string name="menu_about">About</string>
 </resources>

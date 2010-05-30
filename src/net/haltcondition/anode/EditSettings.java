@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 
@@ -25,6 +27,8 @@ public class EditSettings
 {
     private static final String TAG = "EditAccount";
 
+    private static final int MENU_ABOUT = Menu.FIRST;
+    
     private static final long DEFAULT_FREQ = AlarmManager.INTERVAL_HOUR;
 
     private EditText eUsername;
@@ -194,5 +198,30 @@ public class EditSettings
             new HttpWorker<Service>(new Handler(this), account, Common.INODE_URI_BASE, new ServiceParser());
         pool.execute(serviceWorker);
     }
+
+    /* ************************************************************ */
+    // Menus
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        boolean result = super.onCreateOptionsMenu(menu);
+        menu.add(0, MENU_ABOUT, 0, R.string.menu_about)
+            .setIcon(android.R.drawable.ic_menu_info_details);
+        
+        return result;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+          case MENU_ABOUT:
+//            startActivity(new Intent(this, EditSettings.class));
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
 }
