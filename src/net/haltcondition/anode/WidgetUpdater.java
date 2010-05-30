@@ -7,6 +7,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Message;
@@ -150,9 +151,11 @@ public class WidgetUpdater
 
         // Delegate fetch to thread
         SettingsHelper settings = new SettingsHelper(context);
-        WifiManager wifi = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+        ConnectivityManager cmgr= (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        if (settings.getWifiOnly() && wifi.getWifiState() != WifiManager.WIFI_STATE_ENABLED) {
+        if (!cmgr.getBackgroundDataSetting() ||
+            (settings.getWifiOnly() && cmgr.getActiveNetworkInfo().getType() != ConnectivityManager.TYPE_WIFI))
+        {
             Log.i(TAG, "Skipping as WiFi not enabled");
             return;
         }
