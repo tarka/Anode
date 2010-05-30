@@ -17,7 +17,10 @@
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:layout_gravity="center_vertical"
-               android:padding="8dip" />
+               android:paddingLeft="4dip"
+               android:paddingRight="8dip"
+               android:paddingBottom="8dip"
+               android:paddingTop="8dip"/>
 
     <!-- Text over progressbar -->
     <LinearLayout android:orientation="vertical"
