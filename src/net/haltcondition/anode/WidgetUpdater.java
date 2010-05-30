@@ -156,7 +156,7 @@ public class WidgetUpdater
         if (!cmgr.getBackgroundDataSetting() ||
             (settings.getWifiOnly() && cmgr.getActiveNetworkInfo().getType() != ConnectivityManager.TYPE_WIFI))
         {
-            Log.i(TAG, "Skipping as WiFi not enabled");
+            Log.i(TAG, "Skipping as background sync disabled or WiFi not enabled");
             return;
         }
 
