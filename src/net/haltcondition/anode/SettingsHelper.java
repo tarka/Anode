@@ -15,6 +15,7 @@ public class SettingsHelper
     public static final String PREF_SVCNAME = "svcname";
     public static final String PREF_SVCID = "svcid";
     public static final String PREF_UPDATE = "updatefreq";
+    public static final String PREF_WIFI_ONLY = "wifi_only";
 
     private final SharedPreferences settings;
 
@@ -69,8 +70,13 @@ public class SettingsHelper
         setedit.commit();
     }
 
+    public boolean getWifiOnly()
+    {
+        return settings.getBoolean(PREF_WIFI_ONLY, false);
+    }
+
     // All in one so we only send one update
-    public void setAll(Account account, Service svc, long updateInterval)
+    public void setAll(Account account, Service svc, long updateInterval, boolean wifi_only)
     {
         SharedPreferences.Editor setedit = settings.edit();
 
@@ -81,6 +87,8 @@ public class SettingsHelper
         setedit.putString(PREF_SVCID, svc.getServiceId());
 
         setedit.putLong(PREF_UPDATE, updateInterval);
+
+        setedit.putBoolean(PREF_WIFI_ONLY, wifi_only);
 
         setedit.commit();
     }

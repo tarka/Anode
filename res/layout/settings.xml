@@ -46,13 +46,24 @@
              android:layout_below="@id/hr1"
              android:layout_alignLeft="@id/password"
              android:prompt="@string/update_prompt"/>
-
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Update"
               android:layout_alignTop="@id/refreshinterval"
               android:layout_below="@id/hr1"
               android:layout_alignParentLeft="true"/>
+
+    <CheckBox android:id="@+id/wifi_only"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@id/refreshinterval"
+              android:layout_alignParentRight="true"/>
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Wifi only"
+              android:layout_alignParentLeft="true"
+              android:layout_alignTop="@id/wifi_only"/>
+
 
     <Button android:id="@+id/save"
             android:text="Save"

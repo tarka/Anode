@@ -7,6 +7,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -138,8 +139,24 @@ public class WidgetUpdater
         mgr = appWidgetManager;
         widgetIds = appWidgetIds;
 
+        // Make clickable
+        Intent intent = new Intent(context, EditSettings.class);
+
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
+        PendingIntent pi = PendingIntent.getActivity(context, 0, intent, 0);
+        views.setOnClickPendingIntent(R.id.widget_layout, pi);
+        appWidgetManager.updateAppWidget(appWidgetIds, views);
+
+
         // Delegate fetch to thread
         SettingsHelper settings = new SettingsHelper(context);
+        WifiManager wifi = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+
+        if (settings.getWifiOnly() && wifi.getWifiState() != WifiManager.WIFI_STATE_ENABLED) {
+            Log.i(TAG, "Skipping as WiFi not enabled");
+            return;
+        }
+
         Account account = settings.getAccount();
         Service service = settings.getService();
 
@@ -153,12 +170,5 @@ public class WidgetUpdater
                                   Common.usageUri(service), new UsageParser());
         pool.execute(usageWorker);
 
-        // Make clickable
-        Intent intent = new Intent(context, EditSettings.class);
-
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
-        PendingIntent pi = PendingIntent.getActivity(context, 0, intent, 0);
-        views.setOnClickPendingIntent(R.id.widget_layout, pi);
-        appWidgetManager.updateAppWidget(appWidgetIds, views);
     }
 }

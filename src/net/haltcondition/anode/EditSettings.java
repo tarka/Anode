@@ -29,6 +29,7 @@ public class EditSettings
 
     private EditText eUsername;
     private EditText ePassword;
+    private CheckBox wifi_only;
     private long updateFreq = DEFAULT_FREQ;
 
     private static class DelayOption {
@@ -58,6 +59,7 @@ public class EditSettings
 
         final SettingsHelper settings = new SettingsHelper(this);
 
+
         // Account
         eUsername = (EditText) findViewById(R.id.username);
         ePassword = (EditText) findViewById(R.id.password);
@@ -65,6 +67,7 @@ public class EditSettings
         Account account = settings.getAccount();
         eUsername.setText(account.getUsername());
         ePassword.setText(account.getPassword());
+
 
         // Update frequency
         Spinner s = (Spinner)findViewById(R.id.refreshinterval);
@@ -95,6 +98,12 @@ public class EditSettings
         });
 
 
+        // WiFi only
+        wifi_only = (CheckBox)findViewById(R.id.wifi_only);
+        wifi_only.setChecked(settings.getWifiOnly());
+
+
+        // Save
         Button save = (Button) findViewById(R.id.save);
         save.setOnClickListener(
             new View.OnClickListener() {
@@ -161,7 +170,8 @@ public class EditSettings
 
         Account account = new Account(eUsername.getText().toString(),
                                       ePassword.getText().toString());
-        settings.setAll(account, svc, updateFreq);
+
+        settings.setAll(account, svc, updateFreq, wifi_only.isChecked());
 
         Intent i = new Intent(Common.SETTINGS_UPDATE);
         sendBroadcast(i);
