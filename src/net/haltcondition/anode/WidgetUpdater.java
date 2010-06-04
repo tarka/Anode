@@ -8,7 +8,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
-import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -44,8 +43,6 @@ public class WidgetUpdater
 
     // Save for when workers return
     private Context ctx;
-    private AppWidgetManager mgr;
-    private int[] widgetIds;
 
     @Override
     public void onEnabled(Context context)
@@ -54,8 +51,21 @@ public class WidgetUpdater
 
         Log.d(TAG, "DOING ENABLED");
 
-        ctx = context;
-        setAlarm(context);
+        makeClickable(context);
+
+        SettingsHelper settings = new SettingsHelper(context);
+        if (settings.hasSettings()) {
+            initiateUsageUpdate(context);
+            setAlarm(context);
+        } else {
+            Intent intent = new Intent(context, EditSettings.class);
+            PendingIntent pi = PendingIntent.getActivity(context, 0, intent, 0);
+            try {
+                pi.send();
+            } catch (PendingIntent.CanceledException e) {
+                Log.e(TAG, "Failed to send initial config intent");
+            }
+        }
     }
 
     private void setAlarm(Context context)
@@ -76,11 +86,11 @@ public class WidgetUpdater
     {
         if (intent.getAction().equals(Common.USAGE_ALARM)) {
             Log.d(TAG, "Got usage update alarm");
-            AppWidgetManager awm = AppWidgetManager.getInstance(context);
-            onUpdate(context, awm, awm.getAppWidgetIds(new ComponentName(context, WidgetUpdater.class)));
+            initiateUsageUpdate(context);
 
         } else if (intent.getAction().equals(Common.SETTINGS_UPDATE)) {
             Log.d(TAG, "Got settings update broadcast");
+            initiateUsageUpdate(context);
             setAlarm(context);
 
         } else if (intent.getAction().equals(Common.USAGE_UPDATE)) {
@@ -120,9 +130,14 @@ public class WidgetUpdater
 
     private void setUsage(Usage usage)
     {
+        if (ctx == null)
+            return;
+
         final NumberFormat oneDP = new DecimalFormat("#0.0");
 
-        for (int id: widgetIds) {
+        AppWidgetManager awm = AppWidgetManager.getInstance(ctx);
+
+        for (int id: awm.getAppWidgetIds(new ComponentName(ctx, WidgetUpdater.class))) {
             RemoteViews views = new RemoteViews(ctx.getPackageName(), R.layout.widget);
 
             // Update vals
@@ -138,7 +153,7 @@ public class WidgetUpdater
             views.setTextViewText(R.id.widget_quotalevel, oneDP.format(Math.abs(diff / Common.GB)));
             views.setTextViewText(R.id.widget_overunder, diff > 0 ? "under" : "over");
 
-            mgr.updateAppWidget(id, views);
+            awm.updateAppWidget(id, views);
         }
     }
 
@@ -149,9 +164,19 @@ public class WidgetUpdater
 
         // FIXME: Is this OK?
         ctx = context;
-        mgr = appWidgetManager;
-        widgetIds = appWidgetIds;
 
+        makeClickable(context, appWidgetManager, appWidgetIds);
+        initiateUsageUpdate(context);
+    }
+
+    private void makeClickable(Context context)
+    {
+        AppWidgetManager awm = AppWidgetManager.getInstance(context);
+        makeClickable(context, awm, awm.getAppWidgetIds(new ComponentName(context, WidgetUpdater.class)));
+    }
+
+    private void makeClickable(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)
+    {
         // Make clickable
         Intent intent = new Intent(context, EditSettings.class);
 
@@ -159,7 +184,11 @@ public class WidgetUpdater
         PendingIntent pi = PendingIntent.getActivity(context, 0, intent, 0);
         views.setOnClickPendingIntent(R.id.widget_layout, pi);
         appWidgetManager.updateAppWidget(appWidgetIds, views);
+    }
 
+    private void initiateUsageUpdate(Context context)
+    {
+        this.ctx = context;
 
         // Delegate fetch to thread
         SettingsHelper settings = new SettingsHelper(context);
@@ -184,6 +213,5 @@ public class WidgetUpdater
             new HttpWorker<Usage>(new Handler(this), account,
                                   Common.usageUri(service), new UsageParser());
         pool.execute(usageWorker);
-
     }
 }

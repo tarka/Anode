@@ -44,6 +44,11 @@ public class SettingsHelper
         return settings;
     }
 
+    public boolean hasSettings()
+    {
+        return settings.contains(PREF_USERNAME);
+    }
+
     public void setAccount(Account acc)
     {
         SharedPreferences.Editor setedit = settings.edit();
