@@ -1,7 +1,8 @@
 #!/bin/sh -x
 
-# git clone -b widget-no-logo ssh://lucretia/home/ssmith/programming/android/anode
-# cd anode
+rm -rf /tmp/anode-release
+git clone -b widget-no-logo ssh://lucretia/home/ssmith/programming/android/anode /tmp/anode-release
+cd /tmp/anode-release
 
 rm -rf src/image
 android update project -p .
