@@ -22,7 +22,7 @@
               android:layout_height="fill_parent"
               android:layout_gravity="center_horizontal">
 
-    <ImageView android:src="@drawable/internode_nologo"
+    <ImageView android:src="@drawable/anode_logo"
                android:layout_width="fill_parent"
                android:layout_height="wrap_content"
                android:layout_gravity="center_horizontal"
