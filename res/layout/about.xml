@@ -22,7 +22,7 @@
               android:layout_height="fill_parent"
               android:layout_gravity="center_horizontal">
 
-    <ImageView android:src="@drawable/internode_logo"
+    <ImageView android:src="@drawable/internode_nologo"
                android:layout_width="fill_parent"
                android:layout_height="wrap_content"
                android:layout_gravity="center_horizontal"
@@ -54,7 +54,7 @@
               android:layout_weight="1"
               android:layout_gravity="center_horizontal"
               android:gravity="center_horizontal"
-              android:text="This software is licensed under the GPL version 3.  Internode logo used with permission."/>
+              android:text="This software is licensed under the GPL version 3."/>
 
 
 </LinearLayout>
