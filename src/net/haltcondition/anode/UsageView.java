@@ -52,7 +52,7 @@ public class UsageView
 
     public void setUsage(float dataUsedPC, float intoPeriodPC)
     {
-        Log.i(TAG, "Got Usage: "+dataUsedPC+", "+intoPeriodPC);
+        Log.d(TAG, "Got Usage: "+dataUsedPC+", "+intoPeriodPC);
         this.dataUsedPC = dataUsedPC;
         this.intoPeriodPC = intoPeriodPC;
         invalidate();  // Force redraw

@@ -52,7 +52,7 @@ public class HttpWorker<RType>
 
     public void run()
     {
-        Log.i(TAG, "Running");
+        Log.d(TAG, "Running");
 
         DefaultHttpClient client = new DefaultHttpClient();
         try {
@@ -63,7 +63,7 @@ public class HttpWorker<RType>
             HttpGet method = new HttpGet(u);
 
             if (account != null) {
-                Log.i(TAG, "Using account "+account.getUsername());
+                Log.d(TAG, "Using account "+account.getUsername());
                 /*
                  * This sucks, but I've wasted half a day trying to get HttpClient basic auth to work.
                  * Android appears to ship with alpha version of 4.0 that doesn't match the docs.
@@ -74,7 +74,7 @@ public class HttpWorker<RType>
 
             HttpResponse response = client.execute(method);
             if ( response == null){
-                Log.i(TAG, "got a null response" );
+                Log.e(TAG, "got a null response" );
                 sendError("Error Retrieving Service Data");
 
             } else if (response.getStatusLine().getStatusCode() == 200) {

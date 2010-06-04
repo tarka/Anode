@@ -52,7 +52,7 @@ public class WidgetUpdater
     {
         super.onEnabled(context);
 
-        Log.i(TAG, "DOING ENABLED");
+        Log.d(TAG, "DOING ENABLED");
 
         ctx = context;
         setAlarm(context);
@@ -60,7 +60,7 @@ public class WidgetUpdater
 
     private void setAlarm(Context context)
     {
-        Log.i(TAG, "Setting Alarm");
+        Log.d(TAG, "Setting Alarm");
 
         SettingsHelper settings = new SettingsHelper(context);
 
@@ -75,16 +75,16 @@ public class WidgetUpdater
     public void onReceive(Context context, Intent intent)
     {
         if (intent.getAction().equals(Common.USAGE_ALARM)) {
-            Log.i(TAG, "Got usage update alarm");
+            Log.d(TAG, "Got usage update alarm");
             AppWidgetManager awm = AppWidgetManager.getInstance(context);
             onUpdate(context, awm, awm.getAppWidgetIds(new ComponentName(context, WidgetUpdater.class)));
 
         } else if (intent.getAction().equals(Common.SETTINGS_UPDATE)) {
-            Log.i(TAG, "Got settings update broadcast");
+            Log.d(TAG, "Got settings update broadcast");
             setAlarm(context);
 
         } else if (intent.getAction().equals(Common.USAGE_UPDATE)) {
-            Log.i(TAG, "Got usage update broadcast");
+            Log.d(TAG, "Got usage update broadcast");
             // FIXME: Needs parcelable usage
             //setUsage((Usage)intent.getSerializableExtra(Common.USAGE_UPDATE));
 
@@ -95,7 +95,7 @@ public class WidgetUpdater
 
     @Override
     public boolean handleMessage(Message msg) {
-        Log.i(TAG, "Got message: "+ msg.what);
+        Log.d(TAG, "Got message: "+ msg.what);
 
         if (msg.what == HttpWorker.MsgCode.ENDMSG.ordinal()) {
             // Not used
@@ -103,14 +103,14 @@ public class WidgetUpdater
 
         } else if (msg.what == HttpWorker.MsgCode.UPDATEMSG.ordinal()) {
             // Not used, just logged for now
-            Log.i(TAG, "Update: "+msg.obj);
+            Log.d(TAG, "Update: "+msg.obj);
 
         } else if (msg.what == HttpWorker.MsgCode.ERRORMSG.ordinal()) {
             Log.e(TAG, "Error: "+msg.obj);
             // FIXME: Display somehow
 
         } else if (msg.what == HttpWorker.MsgCode.RESULT.ordinal()) {
-            Log.i(TAG, "Got Result");
+            Log.d(TAG, "Got Result");
             setUsage((Usage)msg.obj);
         }
 
@@ -145,7 +145,7 @@ public class WidgetUpdater
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)
     {
-        Log.i(TAG, "Running update");
+        Log.d(TAG, "Running update");
 
         // FIXME: Is this OK?
         ctx = context;

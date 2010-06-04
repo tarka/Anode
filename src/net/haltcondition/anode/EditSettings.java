@@ -127,7 +127,7 @@ public class EditSettings
         save.setOnClickListener(
             new View.OnClickListener() {
                 public void onClick(View view) {
-                    Log.i(TAG, "Got save button click");
+                    Log.d(TAG, "Got save button click");
                     initiateServiceFetch();
                 }
             });
@@ -161,7 +161,7 @@ public class EditSettings
 
         } else if (msg.what == HttpWorker.MsgCode.RESULT.ordinal()) {
             Service service = (Service)msg.obj;
-            Log.i(TAG, "Got service "+service.getServiceName()+": "+service.getServiceId());
+            Log.d(TAG, "Got service "+service.getServiceName()+": "+service.getServiceId());
 
             progress.dismiss();
 
@@ -183,7 +183,7 @@ public class EditSettings
 
     private void saveSettings(Service svc)
     {
-        Log.i(TAG, "Got account");
+        Log.d(TAG, "Got account");
 
         final SettingsHelper settings = new SettingsHelper(this);
 
@@ -199,7 +199,7 @@ public class EditSettings
 
     private void initiateServiceFetch()
     {
-        Log.i(TAG, "Fetching Service ID");
+        Log.d(TAG, "Fetching Service ID");
 
         Account account = new Account(eUsername.getText().toString(),
                                       ePassword.getText().toString());
