@@ -130,31 +130,32 @@ public class WidgetUpdater
 
     private void setUsage(Usage usage)
     {
-        if (ctx == null)
+        if (ctx == null) {
+            Log.d(TAG, "No context, can't update widget");
             return;
+        }
+        Log.d(TAG, "Updating widget");
+
+
+        // Update vals
+        RemoteViews views = new RemoteViews(ctx.getPackageName(), R.layout.widget);
 
         final NumberFormat oneDP = new DecimalFormat("#0.0");
+        Double diff = usage.getOptimalNow() - usage.getUsed();
+
+        views.setProgressBar(R.id.widget_progress, 100, usage.getPercentageUsed().intValue(), false);
+
+        views.setTextViewText(R.id.widget_usedpc, usage.getPercentageUsed().intValue()+"%");
+
+        views.setTextViewText(R.id.widget_total, ((Long)(usage.getTotalQuota()/ Common.GB)).toString());
+        views.setTextViewText(R.id.widget_used, oneDP.format(usage.getUsed().doubleValue() / Common.GB));
+
+        views.setTextViewText(R.id.widget_quotalevel, oneDP.format(Math.abs(diff / Common.GB)));
+        views.setTextViewText(R.id.widget_overunder, diff > 0 ? "under" : "over");
 
         AppWidgetManager awm = AppWidgetManager.getInstance(ctx);
-
-        for (int id: awm.getAppWidgetIds(new ComponentName(ctx, WidgetUpdater.class))) {
-            RemoteViews views = new RemoteViews(ctx.getPackageName(), R.layout.widget);
-
-            // Update vals
-            Double diff = usage.getOptimalNow() - usage.getUsed();
-
-            views.setProgressBar(R.id.widget_progress, 100, usage.getPercentageUsed().intValue(), false);
-
-            views.setTextViewText(R.id.widget_usedpc, usage.getPercentageUsed().intValue()+"%");
-
-            views.setTextViewText(R.id.widget_total, ((Long)(usage.getTotalQuota()/ Common.GB)).toString());
-            views.setTextViewText(R.id.widget_used, oneDP.format(usage.getUsed().doubleValue() / Common.GB));
-
-            views.setTextViewText(R.id.widget_quotalevel, oneDP.format(Math.abs(diff / Common.GB)));
-            views.setTextViewText(R.id.widget_overunder, diff > 0 ? "under" : "over");
-
-            awm.updateAppWidget(id, views);
-        }
+        int[] ids = awm.getAppWidgetIds(new ComponentName(ctx, WidgetUpdater.class));
+        awm.updateAppWidget(ids, views);
     }
 
     @Override
