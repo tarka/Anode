@@ -141,17 +141,40 @@ public class WidgetUpdater
         RemoteViews views = new RemoteViews(ctx.getPackageName(), R.layout.widget);
 
         final NumberFormat oneDP = new DecimalFormat("#0.0");
-        Double diff = usage.getOptimalNow() - usage.getUsed();
+        final NumberFormat noDP = new DecimalFormat("#0");
 
-        views.setProgressBar(R.id.widget_progress, 100, usage.getPercentageUsed().intValue(), false);
+        Long total = usage.getTotalQuota() / Common.GB;
+        double used = usage.getUsed().doubleValue() / Common.GB;
+        int pcUsed = usage.getPercentageUsed().intValue();
+        double diff = usage.getOptimalNow() - usage.getUsed();
+        double adiff = Math.abs(diff / Common.GB);
 
-        views.setTextViewText(R.id.widget_usedpc, usage.getPercentageUsed().intValue()+"%");
+        // total = 200L;
+        // used = 200;
+        // pcUsed = 100;
+        // diff = 200;
+        // adiff = 200;
 
-        views.setTextViewText(R.id.widget_total, ((Long)(usage.getTotalQuota()/ Common.GB)).toString());
-        views.setTextViewText(R.id.widget_used, oneDP.format(usage.getUsed().doubleValue() / Common.GB));
+        if (pcUsed > 99) {
+            pcUsed = 100;
+            // Slightly reduce text to ensure room
+            views.setFloat(R.id.widget_usedpc, "setTextSize", 36f);
+        }
 
-        views.setTextViewText(R.id.widget_quotalevel, oneDP.format(Math.abs(diff / Common.GB)));
+        // Don't bother with decimal for larger numbers, we need the space
+        String usedfmt = (total > 99 || used > 99) ? noDP.format(used) : oneDP.format(used);
+        String difffmt = (adiff > 99) ? noDP.format(adiff) : oneDP.format(adiff);
+
+        views.setTextViewText(R.id.widget_usedpc, pcUsed+"%");
+
+        views.setTextViewText(R.id.widget_total, total.toString());
+        views.setTextViewText(R.id.widget_used, usedfmt);
+
+        views.setTextViewText(R.id.widget_quotalevel, difffmt);
         views.setTextViewText(R.id.widget_overunder, diff > 0 ? "under" : "over");
+
+        views.setProgressBar(R.id.widget_progress, 100, pcUsed, false);
+
 
         AppWidgetManager awm = AppWidgetManager.getInstance(ctx);
         int[] ids = awm.getAppWidgetIds(new ComponentName(ctx, WidgetUpdater.class));
