@@ -210,7 +210,7 @@ public class EditSettings
 
 
         HttpWorker<Service> serviceWorker =
-            new HttpWorker<Service>(new Handler(this), account, Common.INODE_URI_BASE, new ServiceParser());
+            new HttpWorker<Service>(new Handler(this), account, Common.INODE_URI_BASE, new ServiceParser(), this);
         pool.execute(serviceWorker);
     }
 
