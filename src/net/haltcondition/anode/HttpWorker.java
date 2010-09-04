@@ -1,11 +1,12 @@
 package net.haltcondition.anode;
 
+import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
 import net.haltcondition.util.Base64;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.IOException;
 import java.net.URI;
@@ -34,27 +35,22 @@ public class HttpWorker<RType>
     private Account account;
     private String url;
     private HttpResultHandler<RType> resultHandler;
+    private final Context context;
 
-    public HttpWorker(Handler h, String url, HttpResultHandler<RType> resultHandler)
-    {
-        super(h);
-        this.url = url;
-        this.resultHandler = resultHandler;
-    }
-
-    public HttpWorker(Handler h, Account acc, String url, HttpResultHandler<RType> resultHandler)
+    public HttpWorker(Handler h, Account acc, String url, HttpResultHandler<RType> resultHandler, Context context)
     {
         super(h);
         this.account = acc;
         this.url = url;
         this.resultHandler = resultHandler;
+        this.context = context;
     }
 
     public void run()
     {
         Log.d(TAG, "Running");
 
-        DefaultHttpClient client = new DefaultHttpClient();
+        HttpClient client = new WebtoolsHttpClient(context);
         try {
             Log.d(TAG, "performing get " + url );
             sendUpdate("Fetching page ...");

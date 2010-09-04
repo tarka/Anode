@@ -235,7 +235,7 @@ public class WidgetUpdater
 
         HttpWorker<Usage> usageWorker =
             new HttpWorker<Usage>(new Handler(this), account,
-                                  Common.usageUri(service), new UsageParser());
+                                  Common.usageUri(service), new UsageParser(), context);
         pool.execute(usageWorker);
     }
 }

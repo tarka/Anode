@@ -67,7 +67,7 @@ public class Anode
 
         HttpWorker<Usage> usageWorker =
             new HttpWorker<Usage>(new Handler(this), account,
-                                  Common.usageUri(service), new UsageParser());
+                                  Common.usageUri(service), new UsageParser(), this);
         pool.execute(usageWorker);
 
     }
