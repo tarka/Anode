@@ -23,6 +23,7 @@ public final class Common
     }
 
     static final Long GB = 1000000000L;
+    static final Long TB = 1000L * GB;
 
     static final String USAGE_ALARM = "net.haltcondition.anode.broadcast.USAGE_ALARM";
     static final String SETTINGS_UPDATE = "net.haltcondition.anode.broadcast.CONFIG_CHANGED";

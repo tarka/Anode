@@ -149,11 +149,11 @@ public class WidgetUpdater
         double diff = usage.getOptimalNow() - usage.getUsed();
         double adiff = Math.abs(diff / Common.GB);
 
-        // total = 200L;
-        // used = 200;
+        // total = 1000L;
+        // used = 1000L;
         // pcUsed = 100;
         // diff = 200;
-        // adiff = 200;
+        // adiff = 1200;
 
         if (pcUsed > 99) {
             pcUsed = 100;
@@ -162,12 +162,31 @@ public class WidgetUpdater
         }
 
         // Don't bother with decimal for larger numbers, we need the space
-        String usedfmt = (total > 99 || used > 99) ? noDP.format(used) : oneDP.format(used);
-        String difffmt = (adiff > 99) ? noDP.format(adiff) : oneDP.format(adiff);
+        String usedfmt;
+        String totalfmt;
+        String difffmt;
+
+        // Terabyte plans
+        if (total >= 1000) {
+            usedfmt = oneDP.format(used / 1000);
+            totalfmt = oneDP.format(new Float(total)/1000);
+            views.setTextViewText(R.id.widget_units_top, "TB");
+            if (adiff >= 1000) {
+                difffmt = oneDP.format(adiff / 1000);
+                views.setTextViewText(R.id.widget_units_bottom, "TB");
+            } else {
+                difffmt = (adiff > 99) ? noDP.format(adiff) : oneDP.format(adiff);
+            }
+        } else {
+            usedfmt = (total > 99 || used > 99) ? noDP.format(used) : oneDP.format(used);
+            totalfmt = total.toString();
+            difffmt = (adiff > 99) ? noDP.format(adiff) : oneDP.format(adiff);
+        }
+
 
         views.setTextViewText(R.id.widget_usedpc, pcUsed+"%");
 
-        views.setTextViewText(R.id.widget_total, total.toString());
+        views.setTextViewText(R.id.widget_total, totalfmt);
         views.setTextViewText(R.id.widget_used, usedfmt);
 
         views.setTextViewText(R.id.widget_quotalevel, difffmt);
