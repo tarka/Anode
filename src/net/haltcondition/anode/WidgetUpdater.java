@@ -237,9 +237,9 @@ public class WidgetUpdater
         SettingsHelper settings = new SettingsHelper(context);
         ConnectivityManager cmgr= (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        if (!cmgr.getBackgroundDataSetting() ||
-            (settings.getWifiOnly() && cmgr.getActiveNetworkInfo().getType() != ConnectivityManager.TYPE_WIFI))
-        {
+        if (!cmgr.getBackgroundDataSetting()
+                || (settings.getWifiOnly() && cmgr.getActiveNetworkInfo() != null && cmgr
+                        .getActiveNetworkInfo().getType() != ConnectivityManager.TYPE_WIFI)) {
             Log.i(TAG, "Skipping as background sync disabled or WiFi not enabled");
             return;
         }
